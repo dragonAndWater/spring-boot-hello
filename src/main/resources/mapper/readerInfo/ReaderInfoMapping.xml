@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.readerInfo.dao.ReaderInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
+        <result column="id" property="id"/>
+        <result column="register_date" property="registerDate"/>
+        <result column="card_id" property="cardId"/>
+        <result column="reader_name" property="readerName"/>
+        <result column="reader_phone" property="readerPhone"/>
+        <result column="reader_card_type" property="readerCardType"/>
+        <result column="reader_card_no" property="readerCardNo"/>
+        <result column="borrow_max_times" property="borrowMaxTimes"/>
+        <result column="borrow_usable_times" property="borrowUsableTimes"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
+        insert into t_reader_info(
+        id,
+        register_date,
+        card_id,
+        reader_name,
+        reader_phone,
+        reader_card_type,
+        reader_card_no
+        )
+        values(
+        #{id},
+        #{registerDate},
+        #{cardId},
+        #{readerName},
+        #{readerPhone},
+        #{readerCardType},
+        #{readerCardNo}
+        );
+    </insert>
+
+    <update id="updateOne" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
+        update t_reader_info set
+        <trim suffixOverrides=",">
+            <if test="registerDate != null">
+                register_date = #{registerDate},
+            </if>
+            <if test="cardId != null">
+                card_id = #{cardId},
+            </if>
+            <if test="readerName != null">
+                reader_name = #{readerName},
+            </if>
+            <if test="readerPhone != null">
+                reader_phone = #{readerPhone},
+            </if>
+            <if test="readerCardType != null">
+                reader_card_type = #{readerCardType},
+            </if>
+            <if test="readerCardNo != null">
+                reader_card_no = #{readerCardNo},
+            </if>
+            <if test="borrowMaxTimes != null">
+                borrow_max_times = #{borrowMaxTimes},
+            </if>
+            <if test="borrowUsableTimes != null">
+                borrow_usable_times = #{borrowUsableTimes},
+            </if>
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id,
+               register_date,
+               card_id,
+               reader_name,
+               reader_phone,
+               reader_card_type,
+               reader_card_no,
+               borrow_max_times,
+               borrow_usable_times,
+               create_time,
+               update_time
+        from t_reader_info
+        where id = #{id}
+    </select>
+
+
+</mapper>

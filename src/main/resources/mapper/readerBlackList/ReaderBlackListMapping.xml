@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.readerBlackList.dao.ReaderBlackListDao">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
+        <result column="id" property="id"/>
+        <result column="reader_id" property="readerId"/>
+        <result column="reader_name" property="readerName"/>
+        <result column="black_flag" property="blackFlag"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
+        insert into t_reader_black_list(
+        id,
+        reader_id,
+        reader_name,
+        black_flag
+        )
+        values(
+        #{id},
+        #{readerId},
+        #{readerName},
+        #{blackFlag}
+        );
+    </insert>
+
+    <update id="updateOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
+        update t_reader_black_list set
+        <trim suffixOverrides=",">
+            <if test="readerId != null">
+                reader_id = #{readerId},
+            </if>
+            <if test="readerName != null">
+                reader_name = #{readerName},
+            </if>
+            <if test="blackFlag != null">
+                black_flag = #{blackFlag},
+            </if>
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <!--    <select id="selectOne" parameterType="java.lang.Long" resultType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">-->
+    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id,
+               reader_id,
+               reader_name,
+               black_flag,
+               create_time,
+               update_time
+        from t_reader_black_list
+        where id = #{id}
+    </select>
+
+
+</mapper>

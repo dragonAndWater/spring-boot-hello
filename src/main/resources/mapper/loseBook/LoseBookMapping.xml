@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.loseBook.dao.LoseBookDao">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.executer.loseBook.model.LoseBookModel">
+        <result column="id" property="id"/>
+        <result column="book_id" property="bookId"/>
+        <result column="reader_id" property="readerId"/>
+        <result column="reader_name" property="readerName"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="real_price" property="realPrice"/>
+        <result column="lose_date" property="loseDate"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.example.demo.executer.loseBook.model.LoseBookModel">
+        insert into t_lose_book(
+        id,
+        book_id,
+        reader_id,
+        reader_name,
+        book_price,
+        real_price,
+        lose_date
+        )
+        values(
+        #{id},
+        #{bookId},
+        #{readerId},
+        #{readerName},
+        #{bookPrice},
+        #{realPrice},
+        #{loseDate}
+        );
+    </insert>
+
+    <update id="updateOne" parameterType="com.example.demo.executer.loseBook.model.LoseBookModel">
+        update t_lose_book set
+        <trim suffixOverrides=",">
+            <if test="bookId != null">
+                book_id = #{bookId},
+            </if>
+            <if test="readerId != null">
+                reader_id = #{readerId},
+            </if>
+            <if test="readerName != null">
+                reader_name = #{readerName},
+            </if>
+            <if test="bookPrice != null">
+                book_price = #{bookPrice},
+            </if>
+            <if test="realPrice != null">
+                real_price = #{realPrice},
+            </if>
+            <if test="loseDate != null">
+                lose_date = #{loseDate},
+            </if>
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select id,
+               book_id,
+               reader_id,
+               reader_name,
+               book_price,
+               real_price,
+               lose_date,
+               create_time,
+               update_time
+        from t_lose_book
+        where id = #{id}
+    </select>
+
+
+</mapper>

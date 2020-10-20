@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.borrowBoook.dao.BorrowBookDao">
+
+    <resultMap id="BaseResultMap" type="com.example.demo.executer.borrowBoook.model.BorrowBookModel">
+        <result column="id" property="id"/>
+        <result column="book_id" property="bookId"/>
+        <result column="crad_id" property="cardId"/>
+        <result column="reader_id" property="readerId"/>
+        <result column="reader_name" property="readerName"/>
+        <result column="borrow_flag" property="borrowFlag"/>
+        <result column="borrow_date" property="borrowDate"/>
+        <result column="borrow_time" property="borrowTime"/>
+        <result column="back_date" property="backDate"/>
+        <result column="back_time" property="backTime"/>
+        <result column="borrow_amt" property="borrowAmt"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <insert id="insertOne" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel">
+        insert into t_borrow_book(
+        id,
+        book_id,
+        crad_id,
+        reader_id,
+        reader_name,
+        borrow_flag,
+        borrow_date,
+        borrow_time,
+        back_date,
+        back_time,
+        borrow_amt
+        )
+        values(
+        #{id},
+        #{bookId},
+        #{cardId},
+        #{readerId},
+        #{readerName},
+        #{borrowFlag},
+        #{borrowDate},
+        #{borrowTime},
+        #{backDate},
+        #{backTime},
+        #{borrowAmt}
+        );
+    </insert>
+
+    <update id="updateOne" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel">
+        update t_borrow_book set
+        <trim suffixOverrides=",">
+            <if test="bookId != null">
+                book_id = #{bookId},
+            </if>
+            <if test="cardId != null">
+                crad_id = #{cardId},
+            </if>
+            <if test="readerId != null">
+                reader_id = #{readerId},
+            </if>
+            <if test="readerName != null">
+                reader_name = #{readerName},
+            </if>
+            <if test="borrowFlag != null">
+                borrow_flag = #{borrowFlag},
+            </if>
+            <if test="borrowDate != null">
+                borrow_date = #{borrowDate},
+            </if>
+            <if test="borrowTime != null">
+                borrow_time = #{borrowTime},
+            </if>
+            <if test="backDate != null">
+                back_date = #{backDate},
+            </if>
+            <if test="backTime != null">
+                back_time = #{backTime},
+            </if>
+            <if test="borrowAmt != null">
+                borrow_amt = #{borrowAmt},
+            </if>
+        </trim>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+            id,
+            book_id,
+            crad_id,
+            reader_id,
+            reader_name,
+            borrow_flag,
+            borrow_date,
+            borrow_time,
+            back_date,
+            back_time,
+            brrow_amt,
+            create_time,
+            update_time
+        from t_borrow_book
+        where id = #{id}
+    </select>
+
+
+</mapper>

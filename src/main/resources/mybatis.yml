@@ -1,0 +1,14 @@
+# mapper配置路径  不知道为啥，这么写加载不到XML
+#mybatis:
+#  mapper-locations: classpath:mapper/*/*.xml
+
+
+# mybatis日志打印级别  每个dao单独设置
+#logging:
+#  level:
+#    com.example.demo.executer.bookInfo.dao.BookInfoDao: DEBUG
+
+# mybatis日志打印级别 一次性全部设置
+#mybatis:
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
