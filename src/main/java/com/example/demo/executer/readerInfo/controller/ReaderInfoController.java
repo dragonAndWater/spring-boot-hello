@@ -2,6 +2,7 @@ package com.example.demo.executer.readerInfo.controller;
 
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
+import com.example.demo.base.annonation.CheckVisitTimesAroundAnnotation;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.readerInfo.model.ReaderInfoModel;
 import com.example.demo.executer.readerInfo.service.ReaderInfoService;
@@ -40,6 +41,7 @@ public class ReaderInfoController {
     }
 
     @BaseBeforeAnnotation
+    @CheckVisitTimesAroundAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderInfo(@RequestBody ReaderInfoModel model) {
         ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());

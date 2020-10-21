@@ -19,6 +19,14 @@
     </properties>
 
     <dependencies>
+        <!-- 解决yml文件有时没有被加载的问题      start  -->
+        <!--        <dependency>-->
+        <!--            <groupId>org.springframework.cloud</groupId>-->
+        <!--            <artifactId>spring-cloud-context</artifactId>-->
+        <!--            <version>2.0.1.RELEASE</version>-->
+        <!--        </dependency>-->
+        <!-- 解决yml文件有时没有被加载的问题      end   -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -81,23 +89,6 @@
         </dependency>
         <!--fastjson    end-->
 
-        <!--        <dependency>-->
-        <!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-        <!--            <artifactId>jackson-databind</artifactId>-->
-        <!--            <version>2.9.3</version>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-        <!--            <artifactId>jackson-core</artifactId>-->
-        <!--            <version>2.9.3</version>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-annotations &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.fasterxml.jackson.core</groupId>-->
-        <!--            <artifactId>jackson-annotations</artifactId>-->
-        <!--            <version>2.9.3</version>-->
-        <!--        </dependency>-->
         <!--  redis      -->
         <!-- 引入redis客户端依赖 -->
         <!--        <dependency>-->
@@ -146,13 +137,6 @@
         </dependency>
         <!--javax    end-->
 
-        <!--aop -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-aop</artifactId>-->
-<!--            <version>4.3.9.RELEASE</version>-->
-<!--        </dependency>-->
-
         <!-- AspectJ -->
         <dependency>
             <groupId>org.aspectj</groupId>
@@ -166,11 +150,21 @@
             <version>1.8.0</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>cglib</groupId>-->
-<!--            <artifactId>cglib</artifactId>-->
-<!--            <version>2.1</version>-->
-<!--        </dependency>-->
+        <!--  读写excel  之前使用过1.1.2 beat1会产生精度问题，建议使用稳定版本的 easyexcel -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+
+        <!-- md5 -->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
+
 
     </dependencies>
 

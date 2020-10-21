@@ -5,7 +5,9 @@ public enum ResultEnum {
 
     PROCESSING("999999", "交易处理中"),
 
-    FAIL("000001", "交易失败");
+    FAIL("000001", "交易失败"),
+
+    CHECK_USER_ID_VISIT_TIMES("000002","用户达到最大访问次数限制");
 
 
     /**
