@@ -12,24 +12,21 @@
         <result column="reader_card_no" property="readerCardNo"/>
         <result column="borrow_max_times" property="borrowMaxTimes"/>
         <result column="borrow_usable_times" property="borrowUsableTimes"/>
+
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
 
     <insert id="insertOne" parameterType="com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel">
         <trim>
-        insert into t_reader_card(
-        id,
-        reader_id,
-        card_amt,
-        create_date
-        )
-        values(
-        #{id},
-        #{readerId},
-        #{cardAmt},
-        #{createDate}
-        );
+            insert into t_reader_card(
+            id,
+            remark
+            )
+            values(
+            #{id},
+            #{remark}
+            );
         </trim>
     </insert>
 
@@ -45,8 +42,11 @@
             <if test="cardAmt != null">
                 card_amt = #{cardAmt},
             </if>
-            <if test="createDate != null">
-                create_date = #{createDate},
+            <if test="bindDate != null">
+                bind_date = #{bindDate},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
             </if>
         </trim>
         <where>
@@ -56,15 +56,43 @@
 
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
         select id,
-               readerId,
-               usableFlag,
-               cardAmt,
-               createDate,
-               createTime,
-               updateTime
+               reader_id,
+               usable_flag,
+               card_amt,
+               bind_date,
+               remark,
+               create_time,
+               update_time
         from t_reader_card
         where id = #{id}
     </select>
 
+    <select id="selectReaderCardList" parameterType="com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel"
+            resultMap="BaseResultMap">
+        select id,
+               reader_id,
+               usable_flag,
+               card_amt,
+               bind_date,
+               remark,
+               create_time,
+               update_time
+        from t_reader_card
+        <where>
+            <if test="usableFlag != null">
+                and usable_flag = #{usableFlag}
+            </if>
+            <if test="bindDate != null">
+                and bind_date = #{bindDate}
+            </if>
+            <if test="readerId != null">
+                and reader_id = #{readerId}
+            </if>
+        </where>
+        order by create_time desc
+        <if test="pageNo > 0">
+            limit #{startNum}, #{pageSize}
+        </if>
+    </select>
 
 </mapper>

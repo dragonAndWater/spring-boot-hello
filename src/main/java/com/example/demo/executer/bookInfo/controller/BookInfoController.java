@@ -23,7 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
-
+/**
+ * @Author longtao
+ * @Date   2020/10/21
+ * @Describe bookInfo 主要用于维护书籍信息
+ * 如： 新增（批量\单笔）书籍信息、查询书籍信息、更新书籍信息、
+ **/
 @Slf4j
 @RestController
 @RequestMapping(value = "bookInfo")

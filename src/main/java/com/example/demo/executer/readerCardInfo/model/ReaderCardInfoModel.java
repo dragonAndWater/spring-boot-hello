@@ -24,8 +24,10 @@ public class ReaderCardInfoModel extends BaseModel {
     /**
      * 创建日期
      **/
-    private Date createDate;
+    private Date bindDate;
+    /**
+     * 备注
+     **/
+    private String remark;
 
-    public ReaderCardInfoModel() {
-    }
 }

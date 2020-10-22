@@ -5,17 +5,16 @@ import java.security.NoSuchAlgorithmException;
 
 public class MD5Util {
     //待加密的密码
-    public static String password = "zjb0425";
 
     public static void main(String args[]) {
         //结果字符串
-       Long time = System.currentTimeMillis()/1000;
-       String str = "C1ZIOxqRbV3CAZhoB431FNm0EXSa&MBX";
-        System.out.println("time = {}"+time);
-        System.out.println("signature = {}"+get32LowMd5(get32LowMd5(str)+time));
+        Long time = System.currentTimeMillis() / 1000;
+        String str = "C1ZIOxqRbV3CAZhoB431FNm0EXSa&MBX";
+        System.out.println("time = {}" + time);
+        System.out.println("signature = {}" + get32LowMd5(get32LowMd5(str) + time));
     }
 
-    public static String get32LowMd5(String str){
+    public static String get32LowMd5(String str) {
         String result = "";
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");

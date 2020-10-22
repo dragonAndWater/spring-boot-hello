@@ -10,6 +10,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface BookInfoDao extends BaseDao<BookInfoModel> {
-
     List<BookInfoModel> getAll();
 }

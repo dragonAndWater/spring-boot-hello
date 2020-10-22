@@ -20,11 +20,16 @@ public class ReaderInfoController {
     @Autowired
     private ReaderInfoService readerInfoService;
 
+    /**
+     * @Author longtao
+     * @Date 2020/10/21
+     * @Describe 新建读者信息
+     **/
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertReaderInfo(@RequestBody ReaderInfoModel model) {
-        Boolean flag = readerInfoService.insertOne(model);
-        if(flag){
+        Boolean flag = readerInfoService.insertReader(model);
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -34,7 +39,7 @@ public class ReaderInfoController {
     @RequestMapping("updateOne")
     public BaseResponse updateReaderInfo(@RequestBody ReaderInfoModel model) {
         Boolean flag = readerInfoService.updateOne(model);
-        if(flag){
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -45,6 +50,6 @@ public class ReaderInfoController {
     @RequestMapping("selectOne")
     public BaseResponse selectReaderInfo(@RequestBody ReaderInfoModel model) {
         ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
     }
 }

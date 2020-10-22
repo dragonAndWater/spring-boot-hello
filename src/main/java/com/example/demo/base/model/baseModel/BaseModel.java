@@ -34,4 +34,28 @@ public class BaseModel {
      * 更新时间
      **/
     private Date updateTime;
+
+    /**
+     * 当前页，需要查询的页数
+     * pageNo从1开始
+     */
+    private int pageNo = 0;
+
+    /**
+     * 每页显示的条数
+     */
+    private int pageSize = 10;
+
+    /**
+     * 当前页，需要查询的页数
+     * pageNo从1开始
+     */
+    private int startNum = 0;
+
+    /**
+     * 设置分页查询数据
+     */
+    public void setPageQuery() {
+        this.startNum = this.getPageNo() > 0 ? (this.getPageNo() - 1) * this.getPageSize() : 0;
+    }
 }
