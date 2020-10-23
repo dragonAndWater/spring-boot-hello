@@ -18,6 +18,22 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+      id,
+      book_id,
+      crad_id,
+      reader_id,
+      reader_name,
+      borrow_flag,
+      borrow_date,
+      borrow_time,
+      back_date,
+      back_time,
+      brrow_amt,
+      create_time,
+      update_time
+    </sql>
+
     <insert id="insertOne" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel">
         insert into t_borrow_book(
         id,
@@ -105,5 +121,27 @@
         where id = #{id}
     </select>
 
+    <select id="selectBorrowList" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_borrow_book
+        <where>
+            <if test="reader_id != null">
+                and reader_id = #{readerId}
+            </if>
+            <if test="borrow_flag != null">
+                and borrow_flag = #{borrowFlag}
+            </if>
+            <if test="borrow_date != null">
+                and borrow_date = #{borrowDate}
+            </if>
+        </where>
+        order by create_time desc
+        <if test="pageNo != 0">
+            limit #{startNum},#{pageSize}
+        </if>
+
+    </select>
 
 </mapper>

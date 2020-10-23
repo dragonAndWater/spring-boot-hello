@@ -18,6 +18,22 @@
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
+    <sql id="Base_Column_List">
+            id,
+            book_name,
+            book_price,
+            book_auther,
+            book_type,
+            rare_flag,
+            borrow_times,
+            borrow_flag,
+            lose_flag,
+            press,
+            press_date,
+            remark,
+            create_time,
+            update_time
+    </sql>
 
     <insert id="insertOne" parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel">
         <trim>
@@ -114,21 +130,27 @@
 
     <select id="getAll" resultMap="BaseResultMap">
         <trim>
-            select id,
-            book_name,
-            book_price,
-            book_auther,
-            book_type,
-            rare_flag,
-            borrow_times,
-            borrow_flag,
-            lose_flag,
-            press,
-            press_date,
-            remark,
-            create_time,
-            update_time
+            select
+            <include refid="Base_Column_List"/>
             from t_book_info
+            <where>
+                <if test="book_type != null">
+                    and book_type = #{bookType}
+                </if>
+                <if test="rare_flag != null">
+                    and rare_flag = #{rareFlag}
+                </if>
+                <if test="borrow_flag != null">
+                    and borrow_flag = #{borrowFlag}
+                </if>
+                <if test="lose_flag != null">
+                    and lose_flag = #{loseFlag}
+                </if>
+            </where>
+            order by create_time desc
+            <if test="pageNo != 0">
+                limit #{startNum},#{pageSize}
+            </if>
         </trim>
     </select>
 

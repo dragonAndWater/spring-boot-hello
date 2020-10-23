@@ -76,8 +76,9 @@ public class BookInfoController {
      **/
     @BaseBeforeAnnotation
     @RequestMapping("getAll")
-    public BaseResponse getAll() {
-        List<BookInfoModel> bookInfoList = bookInfoService.getAll();
+    public BaseResponse getAll(@RequestBody BookInfoModel model) {
+        model.setPageQuery();
+        List<BookInfoModel> bookInfoList = bookInfoService.getAll(model);
         bookInfoList.forEach(bookInfo -> {
             executorService.execute(() -> {
                 try {
@@ -100,8 +101,8 @@ public class BookInfoController {
      **/
     @BaseBeforeAnnotation
     @RequestMapping("getAll2")
-    public BaseResponse getAll2() {
-        List<BookInfoModel> bookInfoList = bookInfoService.getAll();
+    public BaseResponse getAll2(@RequestBody BookInfoModel model) {
+        List<BookInfoModel> bookInfoList = bookInfoService.getAll(model);
         List<Future<Object>> resultList = new ArrayList<>();
         List<Object> retList = new ArrayList<>();
         bookInfoList.forEach(bookInfo -> {
@@ -151,6 +152,7 @@ public class BookInfoController {
             return new BaseResponse(ResultEnum.FAIL,e.getMessage());
         }
     }
+
 
 
 

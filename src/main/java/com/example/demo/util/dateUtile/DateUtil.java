@@ -1,5 +1,6 @@
 package com.example.demo.util.dateUtile;
 
+
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -21,6 +22,5 @@ public class DateUtil {
     public static String getIdTime() {
         return DATE_ID_TIME.format(ZonedDateTime.now());
     }
-
 
 }

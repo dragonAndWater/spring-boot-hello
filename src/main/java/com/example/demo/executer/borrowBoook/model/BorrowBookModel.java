@@ -5,6 +5,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class BorrowBookModel extends BaseModel {
@@ -48,6 +49,10 @@ public class BorrowBookModel extends BaseModel {
      * 借阅收入
      **/
     private BigDecimal borrowAmt;
+    /**
+     * 书籍列表
+     **/
+    private List<String> bookIds;
 
     public BorrowBookModel() {
     }

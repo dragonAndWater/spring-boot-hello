@@ -31,4 +31,9 @@ public class BaseResponse<T> {
         this.msg = result.getMsg();
         this.data = (T) "";
     }
+    public BaseResponse(ResultEnum result,String msg) {
+        this.code = result.getCode();
+        this.msg = result.getMsg()+msg;
+        this.data = (T) "";
+    }
 }

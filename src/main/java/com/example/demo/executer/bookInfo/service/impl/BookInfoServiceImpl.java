@@ -20,8 +20,8 @@ public class BookInfoServiceImpl extends BaseServiceImpl<BookInfoModel> implemen
     private BookInfoDao bookInfoDao;
 
     @Override
-    public List<BookInfoModel> getAll() {
-        return bookInfoDao.getAll();
+    public List<BookInfoModel> getAll(BookInfoModel bookInfoModel) {
+        return bookInfoDao.getAll(bookInfoModel);
     }
 
     /**
