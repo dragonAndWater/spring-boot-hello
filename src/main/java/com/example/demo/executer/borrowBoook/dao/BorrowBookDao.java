@@ -11,4 +11,11 @@ import java.util.List;
 @Repository
 public interface BorrowBookDao extends BaseDao<BorrowBookModel> {
     List<BorrowBookModel> selectBorrowList(BorrowBookModel borrowBookModel);
+
+    /**
+     * @Author longtao
+     * @Date   2020/10/26
+     * @Describe
+     **/
+    List<BorrowBookModel> selectOverdueBorrowList (BorrowBookModel borrowBookModel);
 }

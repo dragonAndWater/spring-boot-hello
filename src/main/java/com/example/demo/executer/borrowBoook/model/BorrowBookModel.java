@@ -16,7 +16,7 @@ public class BorrowBookModel extends BaseModel {
     /**
      * 借阅卡id
      **/
-    private String cradId;
+    private String cardId;
     /**
      * 读者id
      **/
@@ -53,6 +53,11 @@ public class BorrowBookModel extends BaseModel {
      * 书籍列表
      **/
     private List<String> bookIds;
+    /**
+     * 过期日期   60天前的日期，在该日期前未还书都是超期未还
+     **/
+    private Date overdueDate;
+
 
     public BorrowBookModel() {
     }

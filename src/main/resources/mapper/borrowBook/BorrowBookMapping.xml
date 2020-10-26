@@ -5,7 +5,7 @@
     <resultMap id="BaseResultMap" type="com.example.demo.executer.borrowBoook.model.BorrowBookModel">
         <result column="id" property="id"/>
         <result column="book_id" property="bookId"/>
-        <result column="crad_id" property="cardId"/>
+        <result column="card_id" property="cardId"/>
         <result column="reader_id" property="readerId"/>
         <result column="reader_name" property="readerName"/>
         <result column="borrow_flag" property="borrowFlag"/>
@@ -21,7 +21,7 @@
     <sql id="Base_Column_List">
       id,
       book_id,
-      crad_id,
+      card_id,
       reader_id,
       reader_name,
       borrow_flag,
@@ -38,7 +38,7 @@
         insert into t_borrow_book(
         id,
         book_id,
-        crad_id,
+        card_id,
         reader_id,
         reader_name,
         borrow_flag,
@@ -70,7 +70,7 @@
                 book_id = #{bookId},
             </if>
             <if test="cardId != null">
-                crad_id = #{cardId},
+                card_id = #{cardId},
             </if>
             <if test="readerId != null">
                 reader_id = #{readerId},
@@ -106,7 +106,7 @@
         select
             id,
             book_id,
-            crad_id,
+            card_id,
             reader_id,
             reader_name,
             borrow_flag,
@@ -127,13 +127,16 @@
         <include refid="Base_Column_List"/>
         from t_borrow_book
         <where>
-            <if test="reader_id != null">
+            <if test="readerId != null">
                 and reader_id = #{readerId}
             </if>
-            <if test="borrow_flag != null">
+            <if test="cardId != null">
+                and card_id = #{cardId}
+            </if>
+            <if test="borrowFlag != null">
                 and borrow_flag = #{borrowFlag}
             </if>
-            <if test="borrow_date != null">
+            <if test="borrowDate != null">
                 and borrow_date = #{borrowDate}
             </if>
         </where>
@@ -141,7 +144,20 @@
         <if test="pageNo != 0">
             limit #{startNum},#{pageSize}
         </if>
+    </select>
 
+    <select id="selectOverdueBorrowList" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_borrow_book
+        <where>
+            <if test="cardId != null">
+                and card_id = #{cardId}
+            </if>
+            and back_date is null
+            and borrow_date &lt; #{overdueDate}
+        </where>
     </select>
 
 </mapper>

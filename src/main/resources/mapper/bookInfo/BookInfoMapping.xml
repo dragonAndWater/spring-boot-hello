@@ -128,22 +128,22 @@
         </trim>
     </select>
 
-    <select id="getAll" resultMap="BaseResultMap">
+    <select id="selectBookList" resultMap="BaseResultMap">
         <trim>
             select
             <include refid="Base_Column_List"/>
             from t_book_info
             <where>
-                <if test="book_type != null">
+                <if test="bookType != null">
                     and book_type = #{bookType}
                 </if>
-                <if test="rare_flag != null">
+                <if test="rareFlag != null">
                     and rare_flag = #{rareFlag}
                 </if>
-                <if test="borrow_flag != null">
+                <if test="borrowFlag != null">
                     and borrow_flag = #{borrowFlag}
                 </if>
-                <if test="lose_flag != null">
+                <if test="loseFlag != null">
                     and lose_flag = #{loseFlag}
                 </if>
             </where>

@@ -35,11 +35,11 @@ public class ReaderInfoModel extends BaseModel {
     /**
      * 最大阅量
      **/
-    private String borrowMaxTimes;
+    private Long borrowMaxTimes;
     /**
      * 剩余借阅量
      **/
-    private String borrowUsableTimes;
+    private Long borrowUsableTimes;
 
     public ReaderInfoModel() {
     }

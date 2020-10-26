@@ -1,6 +1,7 @@
 package com.example.demo.base.model.baseResponse;
 
 import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.exception.CheckException;
 import lombok.Data;
 
 @Data
@@ -34,6 +35,11 @@ public class BaseResponse<T> {
     public BaseResponse(ResultEnum result,String msg) {
         this.code = result.getCode();
         this.msg = result.getMsg()+msg;
+        this.data = (T) "";
+    }
+    public BaseResponse(CheckException checkException) {
+        this.code = checkException.getCode();
+        this.msg = checkException.getMsg();
         this.data = (T) "";
     }
 }

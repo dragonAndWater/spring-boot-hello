@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface BookInfoService extends BaseService<BookInfoModel> {
 
-    List<BookInfoModel> getAll(BookInfoModel model);
+    List<BookInfoModel> selectBookList(BookInfoModel model);
 
     Boolean insertByExcel(BookInfoExcelModel bookInfoExcelModel);
 }

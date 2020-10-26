@@ -75,22 +75,22 @@ public class BookInfoController {
      * @Describe 栗子-线程池-线程无返回值
      **/
     @BaseBeforeAnnotation
-    @RequestMapping("getAll")
-    public BaseResponse getAll(@RequestBody BookInfoModel model) {
+    @RequestMapping("selectBookList")
+    public BaseResponse selectBookList(@RequestBody BookInfoModel model) {
         model.setPageQuery();
-        List<BookInfoModel> bookInfoList = bookInfoService.getAll(model);
-        bookInfoList.forEach(bookInfo -> {
-            executorService.execute(() -> {
-                try {
-                    log.info("调用线程池执行List的每一条数据：{}", bookInfo.getBookName());
-                    Thread.sleep(1000);
-                    log.info("线程睡眠1秒");
-                } catch (Exception e) {
-                    log.error("异常：" + e);
-                }
-
-            });
-        });
+        List<BookInfoModel> bookInfoList = bookInfoService.selectBookList(model);
+//        bookInfoList.forEach(bookInfo -> {
+//            executorService.execute(() -> {
+//                try {
+//                    log.info("调用线程池执行List的每一条数据：{}", bookInfo.getBookName());
+//                    Thread.sleep(1000);
+//                    log.info("线程睡眠1秒");
+//                } catch (Exception e) {
+//                    log.error("异常：" + e);
+//                }
+//
+//            });
+//        });
         return new BaseResponse(ResultEnum.SUCCESS, bookInfoList);
     }
 
@@ -102,7 +102,7 @@ public class BookInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("getAll2")
     public BaseResponse getAll2(@RequestBody BookInfoModel model) {
-        List<BookInfoModel> bookInfoList = bookInfoService.getAll(model);
+        List<BookInfoModel> bookInfoList = bookInfoService.selectBookList(model);
         List<Future<Object>> resultList = new ArrayList<>();
         List<Object> retList = new ArrayList<>();
         bookInfoList.forEach(bookInfo -> {

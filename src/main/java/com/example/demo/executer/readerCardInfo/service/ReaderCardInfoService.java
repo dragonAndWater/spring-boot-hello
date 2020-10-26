@@ -17,4 +17,8 @@ public interface ReaderCardInfoService extends BaseService<ReaderCardInfoModel> 
      * @Describe 批量查询借阅卡信息
      **/
     List<ReaderCardInfoModel> selectReaderCardList(ReaderCardInfoModel readerCardInfoModel);
+
+
+
+
 }

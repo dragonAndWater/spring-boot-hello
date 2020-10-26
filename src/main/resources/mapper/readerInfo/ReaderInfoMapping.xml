@@ -16,6 +16,20 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id,
+        register_date,
+        card_id,
+        reader_name,
+        reader_phone,
+        reader_card_type,
+        reader_card_no,
+        borrow_max_times,
+        borrow_usable_times,
+        create_time,
+        update_time
+    </sql>
+
     <insert id="insertOne" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
         insert into t_reader_info(
         id,
@@ -71,19 +85,33 @@
     </update>
 
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select id,
-               register_date,
-               card_id,
-               reader_name,
-               reader_phone,
-               reader_card_type,
-               reader_card_no,
-               borrow_max_times,
-               borrow_usable_times,
-               create_time,
-               update_time
+        select
+        <include refid="Base_Column_List"/>
         from t_reader_info
         where id = #{id}
+    </select>
+
+    <select id="selectReaderInfoList" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        t_reader_info
+        <where>
+            <if test="registerDate">
+                and register_date = #{registerDate}
+            </if>
+            <if test="borrowMaxTimes">
+                and borrow_max_times = #{borrowMaxTimes}
+            </if>
+            <if test="borrowUsableTimes">
+                and borrow_usable_times = #{borrowUsableTimes}
+            </if>
+        </where>
+        order by create_time desc
+        <if test="pageNo != 0">
+            limit #{startNum},#{pageSize}
+        </if>
     </select>
 
 

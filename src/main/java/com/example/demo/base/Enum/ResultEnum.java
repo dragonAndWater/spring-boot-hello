@@ -3,13 +3,21 @@ package com.example.demo.base.Enum;
 public enum ResultEnum {
     SUCCESS("000000", "交易成功"),
 
-    PROCESSING("999999", "交易处理中"),
-
     FAIL("000001", "交易失败"),
 
-    CHECK_USER_ID_VISIT_TIMES("000002","用户达到最大访问次数限制"),
+    CHECK_USER_ID_VISIT_TIMES("100001", "用户达到最大访问次数限制"),
 
-    CHECK_ATTRIBUTE_FAIL("000003","属性检查失败：");
+    CHECK_ATTRIBUTE_FAIL("100002", "属性检查不通过"),
+
+    CHECK_BLACK_LIST("100003", "黑名单检查不通过"),
+
+    CHECK_IS_ARREARAGE("100004", "欠费检查不通过"),
+
+    CHECK_BORROW_USABLE_TIMES("100005", "剩余借阅量检查不通过"),
+
+    CHECK_BORROW_OVERDUE("100006", "有超期书籍未归还"),
+
+    PROCESSING("999999", "交易处理中");
 
 
     /**

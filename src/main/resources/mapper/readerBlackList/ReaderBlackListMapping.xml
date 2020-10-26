@@ -11,6 +11,15 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id,
+        reader_id,
+        reader_name,
+        black_flag,
+        create_time,
+        update_time
+    </sql>
+
     <insert id="insertOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
         insert into t_reader_black_list(
         id,
@@ -44,16 +53,11 @@
         </where>
     </update>
 
-    <!--    <select id="selectOne" parameterType="java.lang.Long" resultType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">-->
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select id,
-               reader_id,
-               reader_name,
-               black_flag,
-               create_time,
-               update_time
+        select
+        <include refid="Base_Column_List"/>
         from t_reader_black_list
-        where id = #{id}
+        where reader_id = #{id}
     </select>
 
 

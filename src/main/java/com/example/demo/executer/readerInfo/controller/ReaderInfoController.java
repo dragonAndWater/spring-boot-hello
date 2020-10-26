@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "readerInfo")
@@ -51,6 +53,13 @@ public class ReaderInfoController {
     @RequestMapping("selectOne")
     public BaseResponse selectReaderInfo(@RequestBody ReaderInfoModel model) {
         ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());
+        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+    }
+
+    @BaseBeforeAnnotation
+    @RequestMapping("selectReaderInfoList")
+    public BaseResponse selectReaderInfoList(@RequestBody ReaderInfoModel model) {
+        List<ReaderInfoModel> bookInfoModel = readerInfoService.selectReaderInfoList(model);
         return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
     }
 }
