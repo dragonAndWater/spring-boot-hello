@@ -62,4 +62,7 @@ public class BorrowBookModel extends BaseModel {
     public BorrowBookModel() {
     }
 
+    public BorrowBookModel(String bookId) {
+        this.bookId = bookId;
+    }
 }

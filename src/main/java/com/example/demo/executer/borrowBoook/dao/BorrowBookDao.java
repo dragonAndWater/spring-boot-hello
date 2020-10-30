@@ -14,8 +14,12 @@ public interface BorrowBookDao extends BaseDao<BorrowBookModel> {
 
     /**
      * @Author longtao
-     * @Date   2020/10/26
+     * @Date 2020/10/26
      * @Describe
      **/
-    List<BorrowBookModel> selectOverdueBorrowList (BorrowBookModel borrowBookModel);
+    List<BorrowBookModel> selectOverdueBorrowList(BorrowBookModel borrowBookModel);
+
+    List<BorrowBookModel> selectNowBorrowList(BorrowBookModel borrowBookModel);
+
+    BorrowBookModel selectNowByBookId(BorrowBookModel borrowBookModel);
 }

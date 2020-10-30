@@ -11,6 +11,15 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id,
+        book_type,
+        fee_amt,
+        fee_type,
+        create_time,
+        update_time
+    </sql>
+
     <insert id="insertOne" parameterType="com.example.demo.executer.bookCharge.model.BookChargeModel">
         insert into t_book_charge(
         id,
@@ -45,15 +54,28 @@
     </update>
 
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select id,
-               book_type,
-               fee_amt,
-               fee_type,
-               create_time,
-               update_time
+        select
+        <include refid="Base_Column_List"/>
         from t_book_charge
-        where id = #{id}
+        where book_type = #{bookType}
     </select>
 
-
+    <select id="selectBookChargeByModel" parameterType="com.example.demo.executer.bookCharge.model.BookChargeModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_book_charge
+        <where>
+            <if test=" bookType != null">
+                and book_type = #{bookType}
+            </if>
+            <if test=" feeType != null">
+                and fee_type = #{feeType}
+            </if>
+            <if test=" feeAmt != null">
+                and fee_amt = #{feeAmt}
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
 </mapper>

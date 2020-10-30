@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "bookCharge")
@@ -45,4 +47,18 @@ public class BookChargeController {
         BookChargeModel bookInfoModel = bookChargeService.selectOne(model.getId());
         return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
     }
+
+    /**
+     * @Author longtao
+     * @Date   2020/10/27
+     * @Describe 根据条件获取计费信息
+     **/
+    @BaseBeforeAnnotation
+    @RequestMapping("selectBookChargeByModel")
+    public BaseResponse selectBookChargeByModel(@RequestBody BookChargeModel model){
+        List<BookChargeModel> bookChargeModelList =  bookChargeService.selectBookChargeByModel(model);
+        return new BaseResponse(ResultEnum.SUCCESS,bookChargeModelList);
+    }
+
+
 }

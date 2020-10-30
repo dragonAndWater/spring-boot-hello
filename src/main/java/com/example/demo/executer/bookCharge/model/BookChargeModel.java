@@ -23,4 +23,7 @@ public class BookChargeModel extends BaseModel {
     public BookChargeModel() {
     }
 
+    public BookChargeModel(String bookType) {
+        this.bookType = bookType;
+    }
 }

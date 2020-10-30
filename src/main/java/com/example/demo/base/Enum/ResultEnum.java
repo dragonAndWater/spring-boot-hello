@@ -17,6 +17,8 @@ public enum ResultEnum {
 
     CHECK_BORROW_OVERDUE("100006", "有超期书籍未归还"),
 
+    CHECK_BORROW_BOOK("100007", "书籍未在借阅表登记"),
+
     PROCESSING("999999", "交易处理中");
 
 

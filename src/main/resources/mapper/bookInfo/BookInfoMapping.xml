@@ -104,23 +104,10 @@
         </where>
     </update>
 
-    <!--    <select id="selectOne" parameterType="java.lang.Long" resultType="com.example.demo.executer.bookInfo.model.BookInfoModel">-->
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
         <trim>
-            select id,
-            book_name,
-            book_price,
-            book_auther,
-            book_type,
-            rare_flag,
-            borrow_times,
-            borrow_flag,
-            lose_flag,
-            press,
-            press_date,
-            remark,
-            create_time,
-            update_time
+            select
+            <include refid="Base_Column_List"/>
             from t_book_info
             <where>
                 id = #{id}

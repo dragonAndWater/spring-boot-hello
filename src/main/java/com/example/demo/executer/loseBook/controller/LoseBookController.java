@@ -2,6 +2,7 @@ package com.example.demo.executer.loseBook.controller;
 
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
+import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.loseBook.model.LoseBookModel;
 import com.example.demo.executer.loseBook.service.LoseBookService;
@@ -23,7 +24,7 @@ public class LoseBookController {
     @RequestMapping("insertOne")
     public BaseResponse insertLoseBook(@RequestBody LoseBookModel model) {
         Boolean flag = loseBookService.insertOne(model);
-        if(flag){
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -33,7 +34,7 @@ public class LoseBookController {
     @RequestMapping("updateOne")
     public BaseResponse updateLoseBook(@RequestBody LoseBookModel model) {
         Boolean flag = loseBookService.updateOne(model);
-        if(flag){
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -43,6 +44,24 @@ public class LoseBookController {
     @RequestMapping("selectOne")
     public BaseResponse selectLoseBook(@RequestBody LoseBookModel model) {
         LoseBookModel bookInfoModel = loseBookService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+    }
+
+    /**
+     * @Author longtao
+     * @Date 2020/10/28
+     * @Describe 根据书籍ID获取赔偿金额
+     **/
+    @BaseBeforeAnnotation
+    @RequestMapping("getRealAmt")
+    public BaseResponse getRealAmt(@RequestBody LoseBookModel model) {
+        try {
+            LoseBookModel loseBookModel = loseBookService.getRealAmt(model);
+            return new BaseResponse(ResultEnum.SUCCESS, loseBookModel);
+        } catch (CheckException e) {
+            return new BaseResponse(e);
+        }
+
+
     }
 }

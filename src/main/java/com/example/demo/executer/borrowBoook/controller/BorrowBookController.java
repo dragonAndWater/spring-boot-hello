@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -22,6 +23,11 @@ public class BorrowBookController {
     @Autowired
     private BorrowBookService borrowBookService;
 
+    /**
+     * @Author longtao
+     * @Date   2020/10/28
+     * @Describe 借书  一个读者N本书
+     **/
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertBorrowBook(@RequestBody BorrowBookModel model) {
@@ -32,21 +38,27 @@ public class BorrowBookController {
         }
 
     }
-
+    /**
+     * @Author longtao
+     * @Date   2020/10/28
+     * @Describe 还书  还书列表
+     * 业务逻辑：
+     * 1:扫描要换对象列表，获取每一本书的借阅金额
+     * 2:传入BorrowBookModelList
+     * 3:返回每本书的还款结果
+     **/
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
-    public BaseResponse updateBorrowBook(@RequestBody BorrowBookModel model) {
-        Boolean flag = borrowBookService.updateOne(model);
-        if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
-        return new BaseResponse(ResultEnum.FAIL);
+    public BaseResponse updateBorrowBook(@RequestBody List<BorrowBookModel> modelList) {
+        Map<String, Boolean> resultMap =  borrowBookService.updateBorrowBook(modelList);
+        return new BaseResponse(ResultEnum.SUCCESS, resultMap);
+
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectBorrowBook(@RequestBody BorrowBookModel model) {
-        BorrowBookModel borrowBookModel = borrowBookService.selectOne(model.getId());
+        BorrowBookModel borrowBookModel = borrowBookService.selectOne(model.getBookId());
         return new BaseResponse(ResultEnum.SUCCESS, borrowBookModel);
     }
 
@@ -91,4 +103,60 @@ public class BorrowBookController {
         return null;
     }
 
+    /**
+     * @Author longtao
+     * @Date 2020/10/27
+     * @Describe 获取超期书籍列表   可跟查询全部以及指定cardid
+     **/
+    @BaseBeforeAnnotation
+    @RequestMapping("selectOverdueBorrowList")
+    public BaseResponse selectOverdueBorrowList(@RequestBody BorrowBookModel model) {
+        List<BorrowBookModel> borrowBookModelList = borrowBookService.selectOverdueBorrowList(model);
+        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModelList);
+    }
+
+    /**
+     * @Author longtao
+     * @Date 2020/10/27
+     * @Describe 获取未超期数据列表   可跟查询全部以及指定cardid
+     **/
+    @BaseBeforeAnnotation
+    @RequestMapping("selectNowBorrowList")
+    public BaseResponse selectNowBorrowList(@RequestBody BorrowBookModel model) {
+        List<BorrowBookModel> borrowBookModelList = borrowBookService.selectNowBorrowList(model);
+        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModelList);
+    }
+
+
+//    /**
+//     * @Author longtao
+//     * @Date 2020/10/27
+//     * @Describe 还书
+//     * 根据书籍id获取当前数据的读者 & 借阅卡信息。更新t_book_info,t_reader_info,t_reader_card
+//     **/
+//    public BaseResponse backBorrowBook(@RequestBody BorrowBookModel model){
+//        //检查借阅表 获取全量借阅信息
+//        BorrowBookModel borrowmodel = borrowBookService.selectNowByBookId(model);
+//        if (null == borrowmodel) {
+//            return new BaseResponse(ResultEnum.CHECK_BORROW_BOOK);
+//        }
+//
+//    }
+
+
+    /**
+     * @Author longtao
+     * @Date 2020/10/27
+     * @Describe 根据书籍id获取书籍借阅费
+     **/
+    @BaseBeforeAnnotation
+    @RequestMapping("getBorrowAmt")
+    public BaseResponse getBorrowAmt(@RequestBody BorrowBookModel model) {
+        BorrowBookModel borrowmodel = borrowBookService.selectNowByBookId(model);
+        if (null == borrowmodel) {
+            return new BaseResponse(ResultEnum.CHECK_BORROW_BOOK);
+        }
+        BorrowBookModel borrowBookModel = borrowBookService.getBorrowAmt(borrowmodel);
+        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModel.getBorrowAmt());
+    }
 }

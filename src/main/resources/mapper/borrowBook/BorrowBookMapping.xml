@@ -29,7 +29,7 @@
       borrow_time,
       back_date,
       back_time,
-      brrow_amt,
+      borrow_amt,
       create_time,
       update_time
     </sql>
@@ -104,21 +104,17 @@
 
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
-            id,
-            book_id,
-            card_id,
-            reader_id,
-            reader_name,
-            borrow_flag,
-            borrow_date,
-            borrow_time,
-            back_date,
-            back_time,
-            brrow_amt,
-            create_time,
-            update_time
+        <include refid="Base_Column_List"/>
         from t_borrow_book
         where id = #{id}
+    </select>
+
+    <select id="selectNowByBookId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_borrow_book
+        where book_id = #{bookId}
+        and back_date is null
     </select>
 
     <select id="selectBorrowList" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel"
@@ -132,6 +128,9 @@
             </if>
             <if test="cardId != null">
                 and card_id = #{cardId}
+            </if>
+            <if test="bookId != null">
+                and book_id = #{bookId}
             </if>
             <if test="borrowFlag != null">
                 and borrow_flag = #{borrowFlag}
@@ -158,6 +157,21 @@
             and back_date is null
             and borrow_date &lt; #{overdueDate}
         </where>
+    </select>
+
+    <select id="selectNowBorrowList" parameterType="com.example.demo.executer.borrowBoook.model.BorrowBookModel"
+            resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_borrow_book
+        <where>
+            <if test="cardId != null">
+                and card_id = #{cardId}
+            </if>
+            and back_date is null
+            and borrow_date &gt; #{overdueDate}
+        </where>
+
     </select>
 
 </mapper>

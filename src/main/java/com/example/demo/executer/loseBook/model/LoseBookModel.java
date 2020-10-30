@@ -11,11 +11,15 @@ public class LoseBookModel extends BaseModel {
     /**
      * 书籍id
      **/
-    private Long bookId;
+    private String bookId;
+    /**
+     * 书籍名称
+     **/
+    private String bookName;
     /**
      * 读者id
      **/
-    private Long readerId;
+    private String readerId;
     /**
      * 读者姓名
      **/
