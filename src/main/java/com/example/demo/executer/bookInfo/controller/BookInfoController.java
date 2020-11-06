@@ -153,6 +153,13 @@ public class BookInfoController {
         }
     }
 
+    @BaseAroundAnnotation
+    @RequestMapping("selectBookInfoAndBorrowInfo")
+    public BaseResponse selectBookInfoAndBorrowInfo(@RequestBody BookInfoModel model) {
+        List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
+        return new BaseResponse(ResultEnum.SUCCESS,list);
+    }
+
 
 
 

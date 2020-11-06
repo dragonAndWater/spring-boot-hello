@@ -11,4 +11,6 @@ public interface BookInfoService extends BaseService<BookInfoModel> {
     List<BookInfoModel> selectBookList(BookInfoModel model);
 
     Boolean insertByExcel(BookInfoExcelModel bookInfoExcelModel);
+
+    List<BookInfoModel> selectBookInfoAndBorrowInfo (BookInfoModel bookInfoModel);
 }

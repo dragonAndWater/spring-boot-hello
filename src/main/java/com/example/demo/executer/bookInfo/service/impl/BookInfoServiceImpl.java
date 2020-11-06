@@ -42,4 +42,10 @@ public class BookInfoServiceImpl extends BaseServiceImpl<BookInfoModel> implemen
         bookInfoModel.setPressDate(bookInfoExcelModel.getPressDate());
         return insertOne(bookInfoModel);
     }
+
+    @Override
+    public List<BookInfoModel> selectBookInfoAndBorrowInfo(BookInfoModel bookInfoModel) {
+        return bookInfoDao.selectBookInfoAndBorrowInfo(bookInfoModel);
+    }
+
 }

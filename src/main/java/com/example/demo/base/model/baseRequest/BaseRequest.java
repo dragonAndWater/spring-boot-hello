@@ -1,5 +1,6 @@
 package com.example.demo.base.model.baseRequest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -15,24 +16,24 @@ public class BaseRequest<T> {
     /**
      * 请求系统号
      **/
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String systemNo;
 
     /**
      * 请求流水号
      **/
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String  seqNo;
 
     /**
     * 请求时间
     **/
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Date tranDate;
 
     /**
      * 请求业务体
      **/
-    @NotNull
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private T data;
 }

@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface BookInfoDao extends BaseDao<BookInfoModel> {
     List<BookInfoModel> selectBookList(BookInfoModel bookInfoModel);
+
+    List<BookInfoModel> selectBookInfoAndBorrowInfo(BookInfoModel bookInfoModel);
 }

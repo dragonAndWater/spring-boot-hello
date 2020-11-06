@@ -109,7 +109,7 @@
             </if>
         </where>
         order by create_time desc
-        <if test="pageNo != 0">
+        <if test="pageNo != null">
             limit #{startNum},#{pageSize}
         </if>
     </select>

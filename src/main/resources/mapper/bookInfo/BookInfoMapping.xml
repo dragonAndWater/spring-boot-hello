@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.executer.bookInfo.dao.BookInfoDao">
-
+    <cache  type="com.example.demo.util.redisUtil.RedisCache"></cache>
     <resultMap id="BaseResultMap" type="com.example.demo.executer.bookInfo.model.BookInfoModel">
         <result column="id" property="id"/>
         <result column="book_name" property="bookName"/>
@@ -18,7 +18,35 @@
         <result column="update_time" property="updateTime"/>
         <result column="create_time" property="createTime"/>
     </resultMap>
-    <sql id="Base_Column_List">
+
+
+    <resultMap id="CollResultMap" type="com.example.demo.executer.bookInfo.model.BookInfoModel">
+        <result column="id" property="id"/>
+        <result column="book_name" property="bookName"/>
+        <result column="book_price" property="bookPrice"/>
+        <result column="book_auther" property="bookAuther"/>
+        <result column="book_type" property="bookType"/>
+        <result column="rare_flag" property="rareFlag"/>
+        <result column="borrow_times" property="borrowTimes"/>
+        <result column="borrow_flag" property="borrowFlag"/>
+        <result column="lose_flag" property="loseFlag"/>
+        <result column="press" property="press"/>
+        <result column="press_date" property="pressDate"/>
+        <result column="remark" property="remark"/>
+        <collection property="borrowList" javaType="List" ofType="com.example.demo.executer.borrowBoook.model.BorrowBookModel" >
+            <result column="book_id" property="bookId"/>
+            <result column="card_id" property="cardId"/>
+            <result column="reader_id" property="readerId"/>
+            <result column="reader_name" property="readerName"/>
+            <result column="borrow_date" property="borrowDate"/>
+            <result column="borrow_time" property="borrowTime"/>
+            <result column="back_date" property="backDate"/>
+            <result column="back_time" property="backTime"/>
+            <result column="borrow_amt" property="borrowAmt"/>
+        </collection>
+    </resultMap>
+
+        <sql id="Base_Column_List">
             id,
             book_name,
             book_price,
@@ -135,10 +163,44 @@
                 </if>
             </where>
             order by create_time desc
-            <if test="pageNo != 0">
+            <if test="pageNo != null">
                 limit #{startNum},#{pageSize}
             </if>
         </trim>
+    </select>
+
+    <select id="selectBookInfoAndBorrowInfo"  parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel" resultMap="CollResultMap">
+        select
+        a.id,
+        a.book_name,
+        a.book_price,
+        a.book_auther,
+        a.book_type,
+        a.rare_flag,
+        a.borrow_times,
+        a.borrow_flag,
+        a.lose_flag,
+        a.press,
+        a.press_date,
+        a.remark,
+        b.book_id,
+        b.card_id,
+        b.reader_id,
+        b.reader_name,
+        b.borrow_date,
+        b.borrow_time,
+        b.back_date,
+        b.back_time,
+        b.borrow_amt
+        from t_book_info a
+        LEFT JOIN t_borrow_book b
+        on a.id = b.book_id
+        <where>
+            <if test="id != null ">
+                and a.id = #{id}
+            </if>
+        </where>
+        order by a.create_time desc
     </select>
 
 
