@@ -1,12 +1,12 @@
 package com.example.demo.executer.readerInfo.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.base.exception.CheckException;
-import com.example.demo.base.service.BaseService;
 import com.example.demo.executer.readerInfo.model.ReaderInfoModel;
 
 import java.util.List;
 
-public interface ReaderInfoService extends BaseService<ReaderInfoModel> {
+public interface ReaderInfoService extends IService<ReaderInfoModel> {
     /**
      * @Author longtao
      * @Date   2020/10/21

@@ -23,28 +23,29 @@ public class LoseBookController {
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertLoseBook(@RequestBody LoseBookModel model) {
-        Boolean flag = loseBookService.insertOne(model);
-        if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = loseBookService.insertOne(model);
+//        if (flag) {
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateLoseBook(@RequestBody LoseBookModel model) {
-        Boolean flag = loseBookService.updateOne(model);
-        if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = loseBookService.updateOne(model);
+//        if (flag) {
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectLoseBook(@RequestBody LoseBookModel model) {
-        LoseBookModel bookInfoModel = loseBookService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+//        LoseBookModel bookInfoModel = loseBookService.selectOne(model.getId());
+//        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+        return null;
     }
 
     /**

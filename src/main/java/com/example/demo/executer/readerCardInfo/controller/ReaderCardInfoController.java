@@ -31,14 +31,14 @@ public class ReaderCardInfoController {
 
     /**
      * @Author longtao
-     * @Date   2020/10/21
+     * @Date 2020/10/21
      * @Describe 生成借阅卡
      **/
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertReaderCard(@RequestBody ReaderCardInfoModel model) {
         Boolean flag = readerCardInfoService.insertCard(model);
-        if(flag){
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -47,18 +47,19 @@ public class ReaderCardInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateReaderCard(@RequestBody ReaderCardInfoModel model) {
-        Boolean flag = readerCardInfoService.updateOne(model);
-        if(flag){
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = readerCardInfoService.updateOne(model);
+//        if(flag){
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderCard(@RequestBody ReaderCardInfoModel model) {
-        ReaderCardInfoModel bookInfoModel = readerCardInfoService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+//        ReaderCardInfoModel bookInfoModel = readerCardInfoService.selectOne(model.getId());
+//        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return null;
     }
 
     @BaseBeforeAnnotation
@@ -66,23 +67,23 @@ public class ReaderCardInfoController {
     public BaseResponse selectReaderCardList(@RequestBody ReaderCardInfoModel model) {
         model.setPageQuery();
         List<ReaderCardInfoModel> bookInfoModel = readerCardInfoService.selectReaderCardList(model);
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
     }
 
     /**
      * @Author longtao
-     * @Date   2020/10/23
+     * @Date 2020/10/23
      * @Describe 为用户进行绑卡操作
      **/
     @Transactional
     @BaseBeforeAnnotation
     @RequestMapping("bindReadCard")
-    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel){
-        if(StringUtils.isEmpty(readerCardInfoModel.getId())){
-            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL,"借阅卡ID不能为空");
+    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) {
+        if (StringUtils.isEmpty(readerCardInfoModel.getId())) {
+            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");
         }
-        if(StringUtils.isEmpty(readerCardInfoModel.getReaderId())){
-            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL,"读者ID不能为空");
+        if (StringUtils.isEmpty(readerCardInfoModel.getReaderId())) {
+            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL, "读者ID不能为空");
         }
         readerCardInfoModel.setBindDate(new Date());
         readerCardInfoModel.setUsableFlag(UsableFlagEnum.BIND.getCode());
@@ -93,7 +94,7 @@ public class ReaderCardInfoController {
         readerInfoModel.setId(readerCardInfoModel.getReaderId());
         readerInfoModel.setCardId(readerCardInfoModel.getId());
         readerInfoModel.setRegisterDate(new Date());
-        readerInfoService.updateOne(readerInfoModel);
+//        readerInfoService.updateOne(readerInfoModel);
 
         return new BaseResponse(ResultEnum.SUCCESS);
     }

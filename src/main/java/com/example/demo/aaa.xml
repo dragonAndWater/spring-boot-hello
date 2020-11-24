@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ccsiot.com.mapper.ScreenCaseMapper">
+
+    <resultMap id="BaseResultMap" type="ccsiot.com.entity.ScreenCaseEntity">
+        <result column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="picture_img" property="pictureImg"/>
+        <result column="text" property="text"/>
+        <result column="is_bloc" property="isBloc"/>
+        <result column="is_province" property="isProvince"/>
+        <result column="priority" property="priority"/>
+        <result column="del_flag" property="delFlag"/>
+        <result column="remark" property="remark"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+            id,title,picture_img,text,is_bloc,is_province,priority,del_flag,remark,update_time,create_time
+    </sql>
+
+    <insert id="insertOne" parameterType="ccsiot.com.entity.ScreenCaseEntity">
+        INSERT INTO SCREEN_CASE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="pictureImg != null">
+                picture_img,
+            </if>
+            <if test="text != null">
+                text,
+            </if>
+            <if test="isBloc != null">
+                is_bloc,
+            </if>
+            <if test="isProvince != null">
+                is_province,
+            </if>
+            <if test="priority != null">
+                priority,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="title != null">
+                #{title},
+            </if>
+            <if test="pictureImg != null">
+                #{pictureImg},
+            </if>
+            <if test="text != null">
+                #{text},
+            </if>
+            <if test="isBloc != null">
+                #{isBloc},
+            </if>
+            <if test="isProvince != null">
+                #{isProvince},
+            </if>
+            <if test="priority != null">
+                #{priority},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag},
+            </if>
+            <if test="remark != null">
+                #{remark},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="deleteOne" parameterType="ccsiot.com.entity.ScreenCaseEntity">
+        update SCREEN_CASE
+        set del_flag = 1
+        where id = #{id}
+    </update>
+
+
+    <update id="updateOne" parameterType="ccsiot.com.entity.ScreenCaseEntity">
+        update  SCREEN_CASE set
+        <trim suffixOverrides=",">
+            <if test="title != null">
+                title,
+            </if>
+            <if test="pictureImg != null">
+                picture_img = #{pictureImg},
+            </if>
+            <if test="text != null">
+                text = #{text},
+            </if>
+            <if test="isBloc != null">
+                is_bloc = #{isBloc},
+            </if>
+            <if test="isProvince != null">
+                is_province = #{isProvince},
+            </if>
+            <if test="priority != null">
+                priority = #{priority},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            <where>
+                and id = #{id}
+            </where>
+        </trim>
+    </update>
+
+    <select id="getList" parameterType="ccsiot.com.entity.ScreenCaseEntity" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"></include>
+        from SCREEN_CASE
+        <where>
+            and del_flag = 0
+            <if test="isBloc != null">
+                and is_bloc = #{isBloc}
+            </if>
+            <if test="isProvince != null">
+                and is_province = #{isProvince}
+            </if>
+        </where>
+        order by priority asc
+        <if test="pageNo != null">
+            limit #{startNum},#{pageSize}
+        </if>
+    </select>
+
+</mapper>

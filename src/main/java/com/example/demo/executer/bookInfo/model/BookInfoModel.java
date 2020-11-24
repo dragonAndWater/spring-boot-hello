@@ -1,7 +1,9 @@
 package com.example.demo.executer.bookInfo.model;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
-import com.example.demo.executer.borrowBoook.model.BorrowBookModel;
+//import com.example.demo.executer.borrowBoook.model.BorrowBookModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -10,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@TableName("t_book_info")
 public class BookInfoModel extends BaseModel {
 
     /**
@@ -68,8 +71,9 @@ public class BookInfoModel extends BaseModel {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String remark;
 
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    private List<BorrowBookModel> borrowList;
+//    @JsonInclude(JsonInclude.Include.NON_NULL)
+//    @TableField(exist=false)
+//    private List<BorrowBookModel> borrowList;
 
     public BookInfoModel() {
     }

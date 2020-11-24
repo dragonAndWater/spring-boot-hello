@@ -1,6 +1,6 @@
 package com.example.demo.executer.readerCardInfo.service.impl;
 
-import com.example.demo.base.service.impl.BaseServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.executer.readerCardInfo.dao.ReaderCardInfoDao;
 import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
 import com.example.demo.executer.readerCardInfo.service.ReaderCardInfoService;
@@ -12,13 +12,13 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ReaderCardInfoServiceImpl extends BaseServiceImpl<ReaderCardInfoModel> implements ReaderCardInfoService {
+public class ReaderCardInfoServiceImpl extends ServiceImpl<ReaderCardInfoDao,ReaderCardInfoModel> implements ReaderCardInfoService {
     @Autowired
     private ReaderCardInfoDao readerCardInfoDao;
     @Override
     public Boolean insertCard(ReaderCardInfoModel readerCardInfoModel) {
-        readerCardInfoModel.setId(this.getBaseId());
-        return this.insertOne(readerCardInfoModel);
+//        readerCardInfoModel.setId(this.getBaseId());
+        return this.save(readerCardInfoModel);
     }
 
     @Override

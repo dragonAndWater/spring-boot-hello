@@ -21,7 +21,16 @@ public class LoginInterceptor implements HandlerInterceptor {
 
         log.info("LoginInterceptor preHandle 开始拦截.........");
         log.info("appId = {}",request.getHeader("appid"));
-        //业务代码
+        String appId = request.getHeader("appId");
+
+        //appId == null， 判断
+        if(null == appId){
+//            return new CheckException();
+        }
+//        AdminModel adminModel = adminService.selectOne(appId);
+//        if(null == adminModel){
+//            return false;
+//        }
         return true;
     }
 

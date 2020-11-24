@@ -58,8 +58,9 @@ public class BorrowBookController {
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectBorrowBook(@RequestBody BorrowBookModel model) {
-        BorrowBookModel borrowBookModel = borrowBookService.selectOne(model.getBookId());
-        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModel);
+//        BorrowBookModel borrowBookModel = borrowBookService.selectOne(model.getBookId());
+//        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModel);
+        return null;
     }
 
     /**

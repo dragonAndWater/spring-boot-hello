@@ -63,85 +63,85 @@
             update_time
     </sql>
 
-    <insert id="insertOne" parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel">
-        <trim>
-            insert into t_book_info(
-            id,
-            book_name,
-            book_price,
-            book_auther,
-            book_type,
-            rare_flag,
-            press,
-            press_date,
-            remark
-            )
-            values(
-            #{id},
-            #{bookName},
-            #{bookPrice},
-            #{bookAuther},
-            #{bookType},
-            #{rareFlag},
-            #{press},
-            #{pressDate},
-            #{remark}
-            );
-        </trim>
-    </insert>
+<!--    <insert id="insertOne" parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel">-->
+    <!--        <trim>-->
+    <!--            insert into t_book_info(-->
+    <!--            id,-->
+    <!--            book_name,-->
+    <!--            book_price,-->
+    <!--            book_auther,-->
+    <!--            book_type,-->
+    <!--            rare_flag,-->
+    <!--            press,-->
+    <!--            press_date,-->
+    <!--            remark-->
+    <!--            )-->
+    <!--            values(-->
+    <!--            #{id},-->
+    <!--            #{bookName},-->
+    <!--            #{bookPrice},-->
+    <!--            #{bookAuther},-->
+    <!--            #{bookType},-->
+    <!--            #{rareFlag},-->
+    <!--            #{press},-->
+    <!--            #{pressDate},-->
+    <!--            #{remark}-->
+    <!--            );-->
+    <!--        </trim>-->
+    <!--    </insert>-->
 
-    <update id="updateOne" parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel">
-        update t_book_info set
-        <trim suffixOverrides=",">
-            <if test="bookName != null">
-                book_name = #{bookInfo},
-            </if>
-            <if test="bookPrice != null">
-                book_price = #{bookPrice},
-            </if>
-            <if test="bookAuther != null">
-                book_auther = #{bookAuther},
-            </if>
-            <if test="bookType != null">
-                book_type = #{bookType},
-            </if>
-            <if test="rareFlag != null">
-                rare_flag = #{rareFlag},
-            </if>
-            <if test="borrowTimes != null">
-                borrow_times = #{borrowTimes},
-            </if>
-            <if test="borrowFlag != null">
-                borrow_flag = #{borrowFlag},
-            </if>
-            <if test="loseFlag != null">
-                lose_flag = #{loseFlag},
-            </if>
-            <if test="press != null">
-                press = #{press},
-            </if>
-            <if test="pressDate != null">
-                press_date = #{pressDate},
-            </if>
-            <if test="remark != null">
-                remark = #{remark},
-            </if>
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
+    <!--    <update id="updateOne" parameterType="com.example.demo.executer.bookInfo.model.BookInfoModel">-->
+    <!--        update t_book_info set-->
+    <!--        <trim suffixOverrides=",">-->
+    <!--            <if test="bookName != null">-->
+    <!--                book_name = #{bookInfo},-->
+    <!--            </if>-->
+    <!--            <if test="bookPrice != null">-->
+    <!--                book_price = #{bookPrice},-->
+    <!--            </if>-->
+    <!--            <if test="bookAuther != null">-->
+    <!--                book_auther = #{bookAuther},-->
+    <!--            </if>-->
+    <!--            <if test="bookType != null">-->
+    <!--                book_type = #{bookType},-->
+    <!--            </if>-->
+    <!--            <if test="rareFlag != null">-->
+    <!--                rare_flag = #{rareFlag},-->
+    <!--            </if>-->
+    <!--            <if test="borrowTimes != null">-->
+    <!--                borrow_times = #{borrowTimes},-->
+    <!--            </if>-->
+    <!--            <if test="borrowFlag != null">-->
+    <!--                borrow_flag = #{borrowFlag},-->
+    <!--            </if>-->
+    <!--            <if test="loseFlag != null">-->
+    <!--                lose_flag = #{loseFlag},-->
+    <!--            </if>-->
+    <!--            <if test="press != null">-->
+    <!--                press = #{press},-->
+    <!--            </if>-->
+    <!--            <if test="pressDate != null">-->
+    <!--                press_date = #{pressDate},-->
+    <!--            </if>-->
+    <!--            <if test="remark != null">-->
+    <!--                remark = #{remark},-->
+    <!--            </if>-->
+    <!--        </trim>-->
+    <!--        <where>-->
+    <!--            id = #{id}-->
+    <!--        </where>-->
+    <!--    </update>-->
 
-    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        <trim>
-            select
-            <include refid="Base_Column_List"/>
-            from t_book_info
-            <where>
-                id = #{id}
-            </where>
-        </trim>
-    </select>
+<!--    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+<!--        <trim>-->
+<!--            select-->
+<!--            <include refid="Base_Column_List"/>-->
+<!--            from t_book_info-->
+<!--            <where>-->
+<!--                id = #{id}-->
+<!--            </where>-->
+<!--        </trim>-->
+<!--    </select>-->
 
     <select id="selectBookList" resultMap="BaseResultMap">
         <trim>

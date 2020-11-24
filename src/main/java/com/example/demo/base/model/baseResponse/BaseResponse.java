@@ -18,6 +18,11 @@ public class BaseResponse<T> {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String msg;
     /**
+     * 统计总数
+     **/
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer count;
+    /**
      * 返回数据
      **/
     @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -32,9 +37,23 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
+    public BaseResponse(String code, String msg, Integer count, T data) {
+        this.code = code;
+        this.msg = msg;
+        this.count = count;
+        this.data = data;
+    }
+
     public BaseResponse(ResultEnum result, T data) {
         this.code = result.getCode();
         this.msg = result.getMsg();
+        this.data = data;
+    }
+
+    public BaseResponse(ResultEnum result, Integer count, T data) {
+        this.code = result.getCode();
+        this.msg = result.getMsg();
+        this.count = count;
         this.data = data;
     }
 

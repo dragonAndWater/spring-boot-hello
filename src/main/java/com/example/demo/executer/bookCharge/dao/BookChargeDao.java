@@ -1,6 +1,6 @@
 package com.example.demo.executer.bookCharge.dao;
 
-import com.example.demo.base.dao.BaseDao;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.demo.executer.bookCharge.model.BookChargeModel;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface BookChargeDao extends BaseDao<BookChargeModel> {
+public interface BookChargeDao extends BaseMapper<BookChargeModel> {
     /**
      * @Author longtao
      * @Date   2020/10/27

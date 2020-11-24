@@ -10,8 +10,8 @@ public class MD5Util {
         //结果字符串
         Long time = System.currentTimeMillis() / 1000;
         String str = "C1ZIOxqRbV3CAZhoB431FNm0EXSa&MBX";
-        System.out.println("time = {}" + time);
-        System.out.println("signature = {}" + get32LowMd5(get32LowMd5(str) + time));
+        System.out.println("time = " + time);
+        System.out.println("signature = " + get32LowMd5(get32LowMd5(str) + time));
     }
 
     public static String get32LowMd5(String str) {

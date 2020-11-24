@@ -20,39 +20,6 @@
         update_time
     </sql>
 
-    <insert id="insertOne" parameterType="com.example.demo.executer.bookCharge.model.BookChargeModel">
-        insert into t_book_charge(
-        id,
-        book_type,
-        fee_amt,
-        fee_type,
-        )
-        values(
-        #{id},
-        #{bookType},
-        #{feeAmt},
-        #{feeType}
-        );
-    </insert>
-
-    <update id="updateOne" parameterType="com.example.demo.executer.bookCharge.model.BookChargeModel">
-        update t_book_charge set
-        <trim suffixOverrides=",">
-            <if test="bookType != null">
-                book_type = #{bookType},
-            </if>
-            <if test="feeAmt != null">
-                fee_amt = #{feeAmt},
-            </if>
-            <if test="feeType != null">
-                fee_type = #{feeType},
-            </if>
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
-
     <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>

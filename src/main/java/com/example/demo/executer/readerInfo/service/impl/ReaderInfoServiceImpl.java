@@ -1,8 +1,9 @@
 package com.example.demo.executer.readerInfo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.exception.CheckException;
-import com.example.demo.base.service.impl.BaseServiceImpl;
 import com.example.demo.executer.readerInfo.dao.ReaderInfoDao;
 import com.example.demo.executer.readerInfo.model.ReaderInfoModel;
 import com.example.demo.executer.readerInfo.service.ReaderInfoService;
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 @Service
-public class ReaderInfoServiceImpl extends BaseServiceImpl<ReaderInfoModel> implements ReaderInfoService {
+public class ReaderInfoServiceImpl extends ServiceImpl<ReaderInfoDao,ReaderInfoModel> implements ReaderInfoService {
 
     @Autowired
     private ReaderInfoDao readerInfoDao;
@@ -25,8 +26,8 @@ public class ReaderInfoServiceImpl extends BaseServiceImpl<ReaderInfoModel> impl
      **/
     @Override
     public Boolean insertReader(ReaderInfoModel readerInfoModel) {
-        readerInfoModel.setId(this.getBaseId());
-        return this.insertOne(readerInfoModel);
+//        readerInfoModel.setId(this.getBaseId());
+        return this.save(readerInfoModel);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class ReaderInfoServiceImpl extends BaseServiceImpl<ReaderInfoModel> impl
      **/
     @Override
     public Boolean judgeBorrowTimes(String readerId) throws CheckException {
-        ReaderInfoModel readerInfoModel = this.selectOne(readerId);
+        ReaderInfoModel readerInfoModel = this.getOne(new QueryWrapper<ReaderInfoModel>().lambda().eq(ReaderInfoModel::getId,readerId));
         if (0 >= readerInfoModel.getBorrowUsableTimes()) {
             throw new CheckException(ResultEnum.CHECK_BORROW_USABLE_TIMES);
         }

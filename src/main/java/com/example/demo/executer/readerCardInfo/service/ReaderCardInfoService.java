@@ -1,11 +1,11 @@
 package com.example.demo.executer.readerCardInfo.service;
 
-import com.example.demo.base.service.BaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
 
 import java.util.List;
 
-public interface ReaderCardInfoService extends BaseService<ReaderCardInfoModel> {
+public interface ReaderCardInfoService extends IService<ReaderCardInfoModel> {
     /**
      * 单条数据-新增
      **/

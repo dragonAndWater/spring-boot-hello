@@ -3,6 +3,11 @@ package com.example.demo.executer.bookInfo.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.demo.base.Enum.LoseFlagEnum;
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.annonation.BaseAroundAnnotation;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
@@ -19,13 +24,15 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+
 /**
  * @Author longtao
- * @Date   2020/10/21
+ * @Date 2020/10/21
  * @Describe bookInfo 主要用于维护书籍信息
  * 如： 新增（批量\单笔）书籍信息、查询书籍信息、更新书籍信息、
  **/
@@ -45,7 +52,7 @@ public class BookInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertBoookInfo(@RequestBody BookInfoModel model) {
-        Boolean flag = bookInfoService.insertOne(model);
+        Boolean flag = bookInfoService.save(model);
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
@@ -55,7 +62,7 @@ public class BookInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateBookInfo(@RequestBody BookInfoModel model) {
-        Boolean flag = bookInfoService.updateOne(model);
+        Boolean flag = bookInfoService.update(new UpdateWrapper<BookInfoModel>());
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
@@ -65,7 +72,7 @@ public class BookInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectBookInfo(@RequestBody BookInfoModel model) {
-        BookInfoModel bookInfoModel = bookInfoService.selectOne(model.getId());
+        BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId, model.getId()));
         return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
     }
 
@@ -129,16 +136,16 @@ public class BookInfoController {
 
     /**
      * @Author longtao
-     * @Date   2020/10/10
-     * @Describe  解析excel,将书籍信息导入bookInfo表中
+     * @Date 2020/10/10
+     * @Describe 解析excel, 将书籍信息导入bookInfo表中
      **/
     @BaseAroundAnnotation
     @RequestMapping("importExcel")
-    public BaseResponse importExcel(MultipartFile file){
-        try{
+    public BaseResponse importExcel(MultipartFile file) {
+        try {
             log.info("------------importExcel start------------");
             //读取excel
-            ExcelReader excelReader = EasyExcel.read(file.getInputStream(), BookInfoExcelModel.class, new BookInfoExcelListener(new BookInfoExcelModel(),bookInfoService,executorService)).build();
+            ExcelReader excelReader = EasyExcel.read(file.getInputStream(), BookInfoExcelModel.class, new BookInfoExcelListener(new BookInfoExcelModel(), bookInfoService, executorService)).build();
             //读取excel第一页内容
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
             excelReader.read(readSheet);
@@ -146,10 +153,10 @@ public class BookInfoController {
             excelReader.finish();
             log.info("------------importExcel end------------");
             return new BaseResponse(ResultEnum.SUCCESS);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
-            log.error("导入表异常："+e);
-            return new BaseResponse(ResultEnum.FAIL,e.getMessage());
+            log.error("导入表异常：" + e);
+            return new BaseResponse(ResultEnum.FAIL, e.getMessage());
         }
     }
 
@@ -157,10 +164,26 @@ public class BookInfoController {
     @RequestMapping("selectBookInfoAndBorrowInfo")
     public BaseResponse selectBookInfoAndBorrowInfo(@RequestBody BookInfoModel model) {
         List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
-        return new BaseResponse(ResultEnum.SUCCESS,list);
+        return new BaseResponse(ResultEnum.SUCCESS, list);
     }
 
 
+    @BaseAroundAnnotation
+    @RequestMapping("selectBookInfoByWrapper")
+    public BaseResponse selectBookInfoByWrapper(@RequestBody BookInfoModel model) {
+//        List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
+//        List<BookInfoModel> list = bookInfoService.list(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag, 0));
+        Page<BookInfoModel> page = new Page<BookInfoModel>(model.getPageNo(), model.getPageSize());
+        //计数
+        Integer count = bookInfoService.count(new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+        //数据
+        IPage<BookInfoModel> list = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+        return new BaseResponse(ResultEnum.SUCCESS, count, list.getRecords());
+    }
 
 
 }

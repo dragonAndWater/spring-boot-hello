@@ -1,12 +1,12 @@
 package com.example.demo.executer.bookInfo.service;
 
-import com.example.demo.base.service.BaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.executer.bookInfo.model.BookInfoExcelModel;
 import com.example.demo.executer.bookInfo.model.BookInfoModel;
 
 import java.util.List;
 
-public interface BookInfoService extends BaseService<BookInfoModel> {
+public interface BookInfoService extends IService<BookInfoModel> {
 
     List<BookInfoModel> selectBookList(BookInfoModel model);
 

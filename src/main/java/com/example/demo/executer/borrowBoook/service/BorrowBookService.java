@@ -1,14 +1,14 @@
 package com.example.demo.executer.borrowBoook.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
-import com.example.demo.base.service.BaseService;
 import com.example.demo.executer.borrowBoook.model.BorrowBookModel;
 
 import java.util.List;
 import java.util.Map;
 
-public interface BorrowBookService extends BaseService<BorrowBookModel> {
+public interface BorrowBookService extends IService<BorrowBookModel> {
 
     /**
      * @Author longtao

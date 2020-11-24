@@ -1,11 +1,11 @@
 package com.example.demo.executer.bookCharge.service;
 
-import com.example.demo.base.service.BaseService;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.executer.bookCharge.model.BookChargeModel;
 
 import java.util.List;
 
-public interface BookChargeService extends BaseService<BookChargeModel> {
+public interface BookChargeService extends IService<BookChargeModel> {
     /**
      * @Author longtao
      * @Date   2020/10/27

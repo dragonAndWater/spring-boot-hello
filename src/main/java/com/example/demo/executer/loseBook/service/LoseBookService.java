@@ -1,10 +1,10 @@
 package com.example.demo.executer.loseBook.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.demo.base.exception.CheckException;
-import com.example.demo.base.service.BaseService;
 import com.example.demo.executer.loseBook.model.LoseBookModel;
 
-public interface LoseBookService extends BaseService<LoseBookModel> {
+public interface LoseBookService extends IService<LoseBookModel> {
 
     /**
      * @Author longtao

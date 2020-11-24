@@ -41,10 +41,10 @@ public class ReaderInfoController {
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateReaderInfo(@RequestBody ReaderInfoModel model) {
-        Boolean flag = readerInfoService.updateOne(model);
-        if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = readerInfoService.updateOne(model);
+//        if (flag) {
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
@@ -52,8 +52,9 @@ public class ReaderInfoController {
     @CheckVisitTimesAroundAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderInfo(@RequestBody ReaderInfoModel model) {
-        ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+//        ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());
+//        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+        return null;
     }
 
     @BaseBeforeAnnotation

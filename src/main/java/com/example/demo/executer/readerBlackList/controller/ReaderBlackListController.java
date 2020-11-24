@@ -29,8 +29,8 @@ public class ReaderBlackListController {
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertReaderBlackList(@RequestBody ReaderBlackListModel model) {
-        Boolean flag = readerBlackListService.insertOne(model);
-        if(flag){
+        Boolean flag = readerBlackListService.save(model);
+        if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
@@ -39,29 +39,30 @@ public class ReaderBlackListController {
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateReaderBlackList(@RequestBody ReaderBlackListModel model) {
-        Boolean flag = readerBlackListService.updateOne(model);
-        if(flag){
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = readerBlackListService.update(model);
+//        if(flag){
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderBlackList(@RequestBody ReaderBlackListModel model) {
-        ReaderBlackListModel bookInfoModel = readerBlackListService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+//        ReaderBlackListModel bookInfoModel = readerBlackListService.selectOne(model.getId());
+//        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return null;
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("importExcel")
     public BaseResponse importExcel(MultipartFile file) {
-        try{
+        try {
 //            String fileNam = file.getOriginalFilename();
 //            log.info("fileName = {}",fileNam);
             log.info("------------importExcel start------------");
             //读取excel
-            ExcelReader excelReader = EasyExcel.read(file.getInputStream(), BlackListExcel.class, new BlackListExcelListener(new BlackListExcel(),readerBlackListService)).build();
+            ExcelReader excelReader = EasyExcel.read(file.getInputStream(), BlackListExcel.class, new BlackListExcelListener(new BlackListExcel(), readerBlackListService)).build();
             //读取excel第一页内容
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
 //            ReadSheet readSheet2 = EasyExcel.readSheet(1).build();
@@ -71,9 +72,9 @@ public class ReaderBlackListController {
             log.info("------------importExcel end------------");
 
             return new BaseResponse(ResultEnum.SUCCESS);
-        }catch (Exception e){
-            log.error("导入表异常："+e);
-            return new BaseResponse(ResultEnum.FAIL,e.getMessage());
+        } catch (Exception e) {
+            log.error("导入表异常：" + e);
+            return new BaseResponse(ResultEnum.FAIL, e.getMessage());
         }
 
     }

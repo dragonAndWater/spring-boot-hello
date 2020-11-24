@@ -1,11 +1,13 @@
 package com.example.demo.executer.borrowBoook.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.arithmetic.BookArithmetic;
 import com.example.demo.base.Enum.BorrowFlagEnum;
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
-import com.example.demo.base.service.impl.BaseServiceImpl;
 import com.example.demo.executer.bookCharge.model.BookChargeModel;
 import com.example.demo.executer.bookCharge.service.BookChargeService;
 import com.example.demo.executer.bookInfo.model.BookInfoModel;
@@ -30,7 +32,7 @@ import java.util.Map;
 
 @Service
 
-public class BorrowBookServiceImpl extends BaseServiceImpl<BorrowBookModel> implements BorrowBookService {
+public class BorrowBookServiceImpl extends ServiceImpl<BorrowBookDao,BorrowBookModel> implements BorrowBookService {
     /**
      * 超期时间
      **/
@@ -76,25 +78,26 @@ public class BorrowBookServiceImpl extends BaseServiceImpl<BorrowBookModel> impl
             readerInfoService.judgeBorrowTimes(borrowBookModel.getReaderId());
 
             //登记借阅流水
-            borrowBookModel.setId(this.getBaseId());
+//            borrowBookModel.setId(this.getBaseId());
             borrowBookModel.setBookId(bookId);
             borrowBookModel.setBorrowFlag(BorrowFlagEnum.LEN_OUT.getCode());
             borrowBookModel.setBorrowDate(new Date());
             borrowBookModel.setBorrowTime(new Date());
-            Boolean flag = this.insertOne(borrowBookModel);
+            Boolean flag = this.save(borrowBookModel);
 
             //更新t_book_info
             BookInfoModel bookInfoModel = new BookInfoModel();
             bookInfoModel.setId(borrowBookModel.getBookId());
             bookInfoModel.setBorrowFlag(BorrowFlagEnum.LEN_OUT.getCode());
-            bookInfoModel.setBorrowTimes(bookInfoService.selectOne(bookInfoModel.getId()).getBorrowTimes() + 1);//书籍借阅次数+1
-            bookInfoService.updateOne(bookInfoModel);
+
+            bookInfoModel.setBorrowTimes(bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId,bookInfoModel.getId())).getBorrowTimes() + 1);//书籍借阅次数+1
+            bookInfoService.update(new UpdateWrapper<BookInfoModel>());
 
             //更新t_reader_info剩余借阅量
             ReaderInfoModel readerInfoModel = new ReaderInfoModel();
             readerInfoModel.setId(borrowBookModel.getReaderId());
-            readerInfoModel.setBorrowUsableTimes(readerInfoService.selectOne(readerInfoModel.getId()).getBorrowUsableTimes() - 1);//读者剩余借阅次数-1
-            readerInfoService.updateOne(readerInfoModel);
+//            readerInfoModel.setBorrowUsableTimes(readerInfoService.getOne(new QueryWrapper<ReaderInfoModel>().lambda().eq(ReaderInfoModel::getId,readerInfoModel.getId()).getBorrowUsableTimes() - 1);//读者剩余借阅次数-1
+            readerInfoService.update(new UpdateWrapper<ReaderInfoModel>(readerInfoModel));
             resultMap.put(bookId, flag);
         }
         return new BaseResponse(ResultEnum.SUCCESS, resultMap);
@@ -140,9 +143,11 @@ public class BorrowBookServiceImpl extends BaseServiceImpl<BorrowBookModel> impl
     @Override
     public BorrowBookModel getBorrowAmt(BorrowBookModel borrowBookModel) {
         //根据书籍ID获取 book_type
-        BookInfoModel bookInfoModel = bookInfoService.selectOne(borrowBookModel.getBookId());
+        BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId,borrowBookModel.getBookId()));
         //根据book_type获取计费标准
-        BookChargeModel bookChargeModel = bookChargeService.selectOne(bookInfoModel.getBookType());
+        BookChargeModel bookChargeModel = bookChargeService.getOne(new QueryWrapper<BookChargeModel>()
+                .lambda()
+                .eq(BookChargeModel::getBookType,bookInfoModel.getBookType()));
         //计费算法 计费类别，计费金额，借阅日期，归还日期
         borrowBookModel.setBorrowAmt(bookArithmetic.getBorrowAmt(bookChargeModel.getFeeAmt(), bookChargeModel.getFeeType(), borrowBookModel.getBorrowDate(), new Date()));
         return borrowBookModel;
@@ -175,22 +180,22 @@ public class BorrowBookServiceImpl extends BaseServiceImpl<BorrowBookModel> impl
             BookInfoModel bookInfoModel = new BookInfoModel();
             bookInfoModel.setId(borrowBookModel.getBookId());
             bookInfoModel.setBorrowFlag(BorrowFlagEnum.RETURN.getCode());
-            bookInfoService.updateOne(bookInfoModel);
+            bookInfoService.update(new UpdateWrapper<BookInfoModel>());
 
             //2.t_reader_info
             ReaderInfoModel readerInfoModel = new ReaderInfoModel();
             readerInfoModel.setId(borrowModel.getReaderId());
-            readerInfoModel.setBorrowUsableTimes(readerInfoService.selectOne(readerInfoModel.getId()).getBorrowUsableTimes()+1);
-            readerInfoService.updateOne(readerInfoModel);
+//            readerInfoModel.setBorrowUsableTimes(readerInfoService.selectOne(readerInfoModel.getId()).getBorrowUsableTimes()+1);
+//            readerInfoService.updateOne(readerInfoModel);
 
             //3.t_borrow_book借阅流水表
             borrowBookModel.setId(borrowModel.getId());
             borrowBookModel.setBackDate(new Date());
             borrowBookModel.setBackTime(new Date());
             borrowBookModel.setBorrowFlag(BorrowFlagEnum.RETURN.getCode());
-            Boolean flag = this.updateOne(borrowBookModel);
+//            Boolean flag = this.updateOne(borrowBookModel);
 
-            resultMap.put(borrowBookModel.getBookId(),flag);
+//            resultMap.put(borrowBookModel.getBookId(),flag);
         });
         return resultMap;
     }
