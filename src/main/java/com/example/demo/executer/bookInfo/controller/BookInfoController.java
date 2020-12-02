@@ -3,6 +3,7 @@ package com.example.demo.executer.bookInfo.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -18,6 +19,7 @@ import com.example.demo.executer.bookInfo.model.BookInfoModel;
 import com.example.demo.executer.bookInfo.service.BookInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +28,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.awt.print.Book;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -59,14 +62,36 @@ public class BookInfoController {
         return new BaseResponse(ResultEnum.FAIL);
     }
 
+    /**
+     * @Author longtao
+     * @Date 2020/11/24
+     * @Describe 更新指定字段，忽略其他字段
+     **/
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateBookInfo(@RequestBody BookInfoModel model) {
-        Boolean flag = bookInfoService.update(new UpdateWrapper<BookInfoModel>());
+        Boolean flag = bookInfoService.update(new UpdateWrapper<BookInfoModel>()
+                .lambda()
+                .set(BookInfoModel::getBookName, model.getBookName())
+                .eq(BookInfoModel::getId, model.getId())
+        );
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
         return new BaseResponse(ResultEnum.FAIL);
+    }
+
+    /**
+     * @Author longtao
+     * @Date 2020/11/24
+     * @Describe mybatis 实现简单的新增或更新
+     **/
+    @BaseAroundAnnotation
+    @RequestMapping("saveOrUpdate")
+    public BaseResponse saveOrUpdate(@RequestBody BookInfoModel model) {
+        //saveOrUpdate 内部逻辑 !StringUtils.checkValNull(idVal) && !Objects.isNull(this.getById((Serializable)idVal)) ? this.updateById(entity) : this.save(entity)
+        Boolean flag = bookInfoService.saveOrUpdate(model);
+        return new BaseResponse(ResultEnum.SUCCESS, flag);
     }
 
     @BaseBeforeAnnotation
@@ -177,13 +202,23 @@ public class BookInfoController {
         //计数
         Integer count = bookInfoService.count(new QueryWrapper<BookInfoModel>()
                 .lambda()
-                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
+        );
+        StringUtils.isEmpty("");
         //数据
         IPage<BookInfoModel> list = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
-                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
+                .like(BookInfoModel::getBookName, "php")
+                .eq(BookInfoModel::getBookName, "php+").or().eq(BookInfoModel::getBookName, "php-")
+                .orderByDesc(BookInfoModel::getCreateTime)
+        );
         return new BaseResponse(ResultEnum.SUCCESS, count, list.getRecords());
     }
 
+    @RequestMapping("testJSONObject")
+    public void testJSONObject(@RequestBody JSONObject jsonObject) {
+        log.info("jsonObject = {} ", jsonObject);
+    }
 
 }

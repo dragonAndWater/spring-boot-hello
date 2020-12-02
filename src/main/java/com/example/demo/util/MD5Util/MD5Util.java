@@ -8,8 +8,8 @@ public class MD5Util {
 
     public static void main(String args[]) {
         //结果字符串
-        Long time = System.currentTimeMillis() / 1000;
-        String str = "C1ZIOxqRbV3CAZhoB431FNm0EXSa&MBX";
+        Long time = System.currentTimeMillis()/1000L;
+        String str = "654321";
         System.out.println("time = " + time);
         System.out.println("signature = " + get32LowMd5(get32LowMd5(str) + time));
     }
@@ -31,11 +31,11 @@ public class MD5Util {
                 buf.append(Integer.toHexString(i));
             }
             result = buf.toString();
-//            System.out.println("MD5(" + password + ",32小写) = " + result);
-//            System.out.println("MD5(" + password + ",32大写) = " + result.toUpperCase());
+//            System.out.println("MD5(" + str + ",32小写) = " + result);
+//            System.out.println("MD5(" + str + ",32大写) = " + result.toUpperCase());
 //            System.out.println("++++++++++++++++++++++++各位大哥借过+++++++++++++++++++++++");
-//            System.out.println("MD5(" + password + ",16小写) = " + buf.toString().substring(8, 24));
-//            System.out.println("MD5(" + password + ",16大写) = " + buf.toString().substring(8, 24).toUpperCase());
+//            System.out.println("MD5(" + str + ",16小写) = " + buf.toString().substring(8, 24));
+//            System.out.println("MD5(" + str + ",16大写) = " + buf.toString().substring(8, 24).toUpperCase());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

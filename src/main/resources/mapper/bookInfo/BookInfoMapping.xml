@@ -162,7 +162,7 @@
                     and lose_flag = #{loseFlag}
                 </if>
             </where>
-            order by create_time desc
+            <!-- order by create_time desc -->
             <if test="pageNo != null">
                 limit #{startNum},#{pageSize}
             </if>

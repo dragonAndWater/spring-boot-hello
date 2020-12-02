@@ -24,28 +24,29 @@ public class BookChargeController {
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
     public BaseResponse insertBookCharge(@RequestBody BookChargeModel model) {
-        Boolean flag = bookChargeService.insertOne(model);
-        if(flag){
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = bookChargeService.insertOne(model);
+//        if(flag){
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("updateOne")
     public BaseResponse updateBookCharge(@RequestBody BookChargeModel model) {
-        Boolean flag = bookChargeService.updateOne(model);
-        if(flag){
-            return new BaseResponse(ResultEnum.SUCCESS);
-        }
+//        Boolean flag = bookChargeService.updateOne(model);
+//        if(flag){
+//            return new BaseResponse(ResultEnum.SUCCESS);
+//        }
         return new BaseResponse(ResultEnum.FAIL);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectBookCharge(@RequestBody BookChargeModel model) {
-        BookChargeModel bookInfoModel = bookChargeService.selectOne(model.getId());
-        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+//        BookChargeModel bookInfoModel = bookChargeService.selectOne(model.getId());
+//        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
+        return null;
     }
 
     /**
@@ -59,6 +60,8 @@ public class BookChargeController {
         List<BookChargeModel> bookChargeModelList =  bookChargeService.selectBookChargeByModel(model);
         return new BaseResponse(ResultEnum.SUCCESS,bookChargeModelList);
     }
+
+
 
 
 }
