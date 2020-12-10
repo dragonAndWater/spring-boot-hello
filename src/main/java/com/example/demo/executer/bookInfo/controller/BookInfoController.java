@@ -26,9 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.awt.print.Book;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -219,6 +217,14 @@ public class BookInfoController {
     @RequestMapping("testJSONObject")
     public void testJSONObject(@RequestBody JSONObject jsonObject) {
         log.info("jsonObject = {} ", jsonObject);
+    }
+    /**
+     * @Author longtao
+     * @Date   2020/12/7
+     * @Describe 使用stream 来操作集合
+     **/
+    public void testStream(@RequestBody BookInfoModel model){
+
     }
 
 }
