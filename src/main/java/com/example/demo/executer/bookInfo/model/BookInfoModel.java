@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
 //import com.example.demo.executer.borrowBoook.model.BorrowBookModel;
 import com.example.demo.executer.borrowBoook.model.BorrowBookModel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
@@ -66,6 +67,7 @@ public class BookInfoModel extends BaseModel {
      * 出版时间
      **/
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date pressDate;
     /**
      * 备注

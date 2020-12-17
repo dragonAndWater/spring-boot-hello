@@ -1,5 +1,6 @@
 package com.example.demo.executer.bookInfo.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.base.Enum.BookTypeEnum;
 import com.example.demo.base.Enum.RareFlagEnum;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class BookInfoServiceImpl extends ServiceImpl<BookInfoDao,BookInfoModel> implements BookInfoService {
+public class BookInfoServiceImpl extends ServiceImpl<BookInfoDao,BookInfoModel> implements BookInfoService{
     @Autowired
     private BookInfoDao bookInfoDao;
 

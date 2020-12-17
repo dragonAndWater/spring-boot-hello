@@ -33,7 +33,7 @@ public class ReaderBlackListController {
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -43,7 +43,7 @@ public class ReaderBlackListController {
 //        if(flag){
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -74,7 +74,7 @@ public class ReaderBlackListController {
             return new BaseResponse(ResultEnum.SUCCESS);
         } catch (Exception e) {
             log.error("导入表异常：" + e);
-            return new BaseResponse(ResultEnum.FAIL, e.getMessage());
+            return new BaseResponse(ResultEnum.ERROR, e.getMessage());
         }
 
     }

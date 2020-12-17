@@ -26,10 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.awt.print.Book;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.stream.Collectors;
 
 /**
  * @Author longtao
@@ -57,7 +60,7 @@ public class BookInfoController {
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     /**
@@ -76,7 +79,7 @@ public class BookInfoController {
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     /**
@@ -179,7 +182,7 @@ public class BookInfoController {
         } catch (Exception e) {
             e.printStackTrace();
             log.error("导入表异常：" + e);
-            return new BaseResponse(ResultEnum.FAIL, e.getMessage());
+            return new BaseResponse(ResultEnum.ERROR, e.getMessage());
         }
     }
 
@@ -196,7 +199,7 @@ public class BookInfoController {
     public BaseResponse selectBookInfoByWrapper(@RequestBody BookInfoModel model) {
 //        List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
 //        List<BookInfoModel> list = bookInfoService.list(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag, 0));
-        Page<BookInfoModel> page = new Page<BookInfoModel>(model.getPageNo(), model.getPageSize());
+        Page<BookInfoModel> page = new Page(model.getPageNo(), model.getPageSize());
         //计数
         Integer count = bookInfoService.count(new QueryWrapper<BookInfoModel>()
                 .lambda()
@@ -218,13 +221,68 @@ public class BookInfoController {
     public void testJSONObject(@RequestBody JSONObject jsonObject) {
         log.info("jsonObject = {} ", jsonObject);
     }
+
     /**
      * @Author longtao
-     * @Date   2020/12/7
+     * @Date 2020/12/7
      * @Describe 使用stream 来操作集合
      **/
-    public void testStream(@RequestBody BookInfoModel model){
+    @BaseAroundAnnotation
+    @RequestMapping("testStream")
+    public List testStream(@RequestBody BookInfoModel model) {
+        List<BookInfoModel> bookInfoLists = bookInfoService.list(new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getBookType, model.getBookType()));
+        //获取到一个list
+        List<BookInfoModel> resultList = bookInfoLists
+                .stream()
+                .filter(bookInfoModel -> new BigDecimal("30.00").compareTo(bookInfoModel.getBookPrice()) <= 0)
+                .filter(bookInfoModel -> new BigDecimal("70.00").compareTo(bookInfoModel.getBookPrice()) >= 0)
+                .collect(Collectors.toList());
+        return resultList;
+    }
 
+    /**
+     * @Author longtao
+     * @Date 2020/12/17
+     * @Describe 测试stream 和 Limit
+     **/
+    @BaseAroundAnnotation
+    @RequestMapping("testStreamLimit")
+    public List testStreamLimit(@RequestBody BookInfoModel model) {
+        List<BookInfoModel> list = bookInfoService.list(new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
+                .orderByDesc(BookInfoModel::getCreateTime)
+        )
+                .stream()
+                .limit(1)
+                .collect(Collectors.toList());
+        return list;
+    }
+
+    /**
+     * @Author longtao
+     * @Date 2020/12/17
+     * @Describe 测试wrapper不适用 .lambda()
+     * 结果：不适用lambda ，无法使用 Model::getXX
+     **/
+    @BaseAroundAnnotation
+    @RequestMapping("testLambda")
+    public List testLambda(@RequestBody BookInfoModel model) {
+        List<BookInfoModel> bookInfoModelList = bookInfoService.list(new QueryWrapper<BookInfoModel>()
+                .eq("lose_flag", LoseFlagEnum.UN_LOSE.getCode()));
+        return bookInfoModelList;
+    }
+
+    @BaseAroundAnnotation
+    @RequestMapping("bookInfoPage")
+    public List bookInfoPage(@RequestBody BookInfoModel model) {
+        Page page = new Page(model.getPageNo(), model.getPageSize());
+        IPage bookLists = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+        return bookLists.getRecords();
     }
 
 }

@@ -3,7 +3,7 @@ package com.example.demo.base.Enum;
 public enum ResultEnum {
     SUCCESS("000000", "交易成功"),
 
-    FAIL("000001", "交易失败"),
+    ERROR("000001", "交易失败"),
 
     CHECK_USER_ID_VISIT_TIMES("100001", "用户达到最大访问次数限制"),
 

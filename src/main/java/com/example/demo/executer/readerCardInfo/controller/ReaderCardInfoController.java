@@ -41,7 +41,7 @@ public class ReaderCardInfoController {
         if (flag) {
             return new BaseResponse(ResultEnum.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -51,7 +51,7 @@ public class ReaderCardInfoController {
 //        if(flag){
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.FAIL);
+        return new BaseResponse(ResultEnum.ERROR);
     }
 
     @BaseBeforeAnnotation
