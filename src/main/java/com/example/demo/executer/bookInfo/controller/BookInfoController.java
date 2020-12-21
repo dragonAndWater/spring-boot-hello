@@ -277,12 +277,13 @@ public class BookInfoController {
 
     @BaseAroundAnnotation
     @RequestMapping("bookInfoPage")
-    public List bookInfoPage(@RequestBody BookInfoModel model) {
+    public BaseResponse bookInfoPage(@RequestBody BookInfoModel model) {
+        //分页查询 bookLists.getTotal 是总数，getsize是当前数
         Page page = new Page(model.getPageNo(), model.getPageSize());
         IPage bookLists = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
                 .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
-        return bookLists.getRecords();
+        return new BaseResponse(ResultEnum.SUCCESS,(int) bookLists.getTotal(),bookLists.getRecords());
     }
 
 }

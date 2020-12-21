@@ -1,6 +1,5 @@
 package com.example.demo.executer.bookInfo.service.impl;
 
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.base.Enum.BookTypeEnum;
 import com.example.demo.base.Enum.RareFlagEnum;

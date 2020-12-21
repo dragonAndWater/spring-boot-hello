@@ -52,15 +52,15 @@ public class ReaderInfoController {
     @CheckVisitTimesAroundAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderInfo(@RequestBody ReaderInfoModel model) {
-//        ReaderInfoModel bookInfoModel = readerInfoService.selectOne(model.getId());
-//        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
-        return null;
+        ReaderInfoModel readerInfoModel = readerInfoService.getById(model.getId());
+        return new BaseResponse(ResultEnum.SUCCESS,readerInfoModel);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectReaderInfoList")
     public BaseResponse selectReaderInfoList(@RequestBody ReaderInfoModel model) {
-        List<ReaderInfoModel> bookInfoModel = readerInfoService.selectReaderInfoList(model);
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+//        List<ReaderInfoModel> bookInfoModel = readerInfoService.selectReaderInfoList(model);
+        List<ReaderInfoModel> readerInfoModelList = readerInfoService.list();
+        return new BaseResponse(ResultEnum.SUCCESS, readerInfoModelList);
     }
 }

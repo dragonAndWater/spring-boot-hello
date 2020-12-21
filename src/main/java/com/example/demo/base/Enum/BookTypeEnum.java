@@ -1,5 +1,8 @@
 package com.example.demo.base.Enum;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @Author longtao
  * @Date 2020/10/10
@@ -69,4 +72,21 @@ public enum BookTypeEnum {
         return null;
     }
 
+
+    //替换循环遍历
+    public static Map<String,String> maps = new HashMap<>();
+    static {
+        for(BookTypeEnum bookTypeEnum :values()){
+            maps.put(bookTypeEnum.code,bookTypeEnum.msg);
+        }
+    }
+    //根据枚举的code ,获取枚举的msg
+    public static String getMsgByCode(String code){
+        return maps.get(code);
+    }
+
+    public static void main(String[] args) {
+        String msg = BookTypeEnum.getMsgByCode("4");
+        System.out.println(msg);
+    }
 }

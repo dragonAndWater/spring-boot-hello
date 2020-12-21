@@ -1,16 +1,20 @@
 package com.example.demo.executer.readerInfo.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
 
 
 @Data
+@TableName("t_reader_info")
 public class ReaderInfoModel extends BaseModel {
     /**
      * 注册日期
      **/
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date registerDate;
     /**
      * 借阅卡ID
