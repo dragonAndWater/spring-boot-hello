@@ -1,5 +1,6 @@
 package com.example.demo.executer.bookInfo.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.base.Enum.BookTypeEnum;
 import com.example.demo.base.Enum.RareFlagEnum;
@@ -45,6 +46,11 @@ public class BookInfoServiceImpl extends ServiceImpl<BookInfoDao,BookInfoModel> 
     @Override
     public List<BookInfoModel> selectBookInfoAndBorrowInfo(BookInfoModel bookInfoModel) {
         return bookInfoDao.selectBookInfoAndBorrowInfo(bookInfoModel);
+    }
+
+    @Override
+    public List<BookInfoModel> selectByAnnonation(Wrapper wrapper) {
+        return bookInfoDao.selectByAnnonation(wrapper);
     }
 
 }

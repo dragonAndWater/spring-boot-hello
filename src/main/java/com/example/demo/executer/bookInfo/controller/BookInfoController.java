@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -282,8 +281,18 @@ public class BookInfoController {
         Page page = new Page(model.getPageNo(), model.getPageSize());
         IPage bookLists = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
-                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
+                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
+                .notBetween(BookInfoModel::getBookType,"6","8")
+                .like(BookInfoModel::getBookName,"软件")
+        );
         return new BaseResponse(ResultEnum.SUCCESS,(int) bookLists.getTotal(),bookLists.getRecords());
     }
+
+    @RequestMapping("selectByAnnonation")
+    public List  selectByAnnonation(@RequestBody BookInfoModel model){
+        return bookInfoService.selectByAnnonation(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag,LoseFlagEnum.UN_LOSE.getCode()));
+    }
+
+
 
 }
