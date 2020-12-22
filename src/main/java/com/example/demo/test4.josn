@@ -1,0 +1,19 @@
+id -主键id
+tenant -公司id
+start_ip -起始IP
+end_ip -结束IP
+snmp_version -SNMP版本
+snmp_port-SNMP端口
+timeout-超时（ms）
+reTryies -重试次数
+read_community -可读团体号
+snmp_user-SNMP用户
+security_level -安全模式
+auth_algorithm -认证算法：MD5或者SHA
+auth_password-认证密码
+privacy_algorithm-加密算法
+privacy_password -加密密码
+link_protocol-链路发现协议:lldp stp rstp aft port
+description-描述
+
+

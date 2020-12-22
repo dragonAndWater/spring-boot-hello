@@ -3,6 +3,7 @@ package com.example.demo.executer.readerCardInfo.controller;
 import com.example.demo.base.Enum.ResultEnum;
 import com.example.demo.base.Enum.UsableFlagEnum;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
+import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
 import com.example.demo.executer.readerCardInfo.service.ReaderCardInfoService;
@@ -78,23 +79,24 @@ public class ReaderCardInfoController {
     @Transactional
     @BaseBeforeAnnotation
     @RequestMapping("bindReadCard")
-    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) {
+    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) throws Exception{
         if (StringUtils.isEmpty(readerCardInfoModel.getId())) {
-            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");
+            //抛出异常，GlobalExceptionHandler中handleException(CheckException e) 设置返回内容
+            throw new CheckException(ResultEnum.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");
         }
         if (StringUtils.isEmpty(readerCardInfoModel.getReaderId())) {
-            return new BaseResponse(ResultEnum.CHECK_ATTRIBUTE_FAIL, "读者ID不能为空");
+            throw new CheckException(ResultEnum.CHECK_ATTRIBUTE_FAIL, "读者ID不能为空");
         }
         readerCardInfoModel.setBindDate(new Date());
         readerCardInfoModel.setUsableFlag(UsableFlagEnum.BIND.getCode());
         //更新借阅卡信息
-        this.updateReaderCard(readerCardInfoModel);
+        readerCardInfoService.updateById(readerCardInfoModel);
         //更新读者信息
         ReaderInfoModel readerInfoModel = new ReaderInfoModel();
         readerInfoModel.setId(readerCardInfoModel.getReaderId());
         readerInfoModel.setCardId(readerCardInfoModel.getId());
         readerInfoModel.setRegisterDate(new Date());
-//        readerInfoService.updateOne(readerInfoModel);
+        readerInfoService.updateById(readerInfoModel);
 
         return new BaseResponse(ResultEnum.SUCCESS);
     }

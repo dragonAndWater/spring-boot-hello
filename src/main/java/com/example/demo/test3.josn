@@ -1,0 +1,13 @@
+{
+  "exchange": "upstream",
+  "payload": [
+    {
+      "content": "{\"signalTime\":1607336896,\"extVoltage\":25.3,\"positionType\":\"GPS\",\"platformEndTime\":1909532398,\"sa_Direction\":294.0,\"activateTime\":1593999598,\"simEndTime\":1598889600,\"sa_Time\":1607310626,\"accStatus\":false,\"sa_Speed\":0.0,\"statusTimeDesc\":\"7小时23分钟38秒\",\"isWireless\":0,\"sim\":\"1440322540407\",\"sa_longitude\":104.644081,\"imei\":\"868035043004239\",\"licenseNumber\":\"川M9219B\",\"endTime\":1909532398,\"sa_latitude\":30.125742,\"status\":\"静止\"}",
+      "data": "{\"signalTime\":1607336896,\"extVoltage\":253,\"code\":0,\"lng\":\"104.644081\",\"positionType\":\"GPS\",\"platformEndTime\":1909532398,\"accountName\":\"17780770816\",\"activateTime\":1593999598,\"simEndTime\":1598889600,\"gpsTime\":1607310626,\"userName\":\"雁江项目经理\",\"accStatus\":false,\"speed\":0,\"statusTimeDesc\":\"7小时23分钟38秒\",\"accountId\":10149871,\"isWireless\":0,\"sim\":\"1440322540407\",\"imei\":\"868035043004239\",\"course\":294,\"licenseNumber\":\"川M9219B\",\"endTime\":1909532398,\"lat\":\"30.125742\",\"status\":\"静止\"}",
+      "deviceKey": "160308727300087ce8",
+      "notifyType": "deviceDataChanged",
+      "timestamp": 1607337174093
+    }
+  ],
+  "routingKey": "deviceDataChangeHandle"
+}

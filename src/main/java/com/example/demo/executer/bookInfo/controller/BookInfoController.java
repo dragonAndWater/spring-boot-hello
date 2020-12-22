@@ -263,7 +263,7 @@ public class BookInfoController {
     /**
      * @Author longtao
      * @Date 2020/12/17
-     * @Describe 测试wrapper不适用 .lambda()
+     * @Describe 测试wrapper不使用 .lambda()
      * 结果：不适用lambda ，无法使用 Model::getXX
      **/
     @BaseAroundAnnotation

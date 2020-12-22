@@ -1,5 +1,6 @@
 package com.example.demo.executer.readerCardInfo.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -9,6 +10,7 @@ import java.util.Date;
 
 
 @Data
+@TableName("t_reader_card")
 public class ReaderCardInfoModel extends BaseModel {
     /**
      * 读者id

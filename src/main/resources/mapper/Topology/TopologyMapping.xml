@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.deviceTopDemo.dao.TopologyDao">
+
+    <!--    <resultMap id="BaseResultMap" type="com.example.demo.executer.deviceTopDemo.model.Topology">-->
+    <!--        <result column="id" property="id"/>-->
+    <!--        <result column="name" property="name"/>-->
+    <!--        <result column="book_name" property="bookName"/>-->
+    <!--        <result column="reader_id" property="readerId"/>-->
+    <!--        <result column="reader_name" property="readerName"/>-->
+    <!--        <result column="book_price" property="bookPrice"/>-->
+    <!--        <result column="real_price" property="realPrice"/>-->
+    <!--        <result column="lose_date" property="loseDate"/>-->
+    <!--        <result column="update_time" property="updateTime"/>-->
+    <!--        <result column="create_time" property="createTime"/>-->
+    <!--    </resultMap>-->
+
+
+    <select id="getTopology" resultType="com.example.demo.executer.deviceTopDemo.model.Topology">
+      SELECT
+	    dopt.id,
+	    dopt.parent_id,
+	    odi.device_name NAME
+      FROM
+	    device_opt dopt
+      LEFT JOIN opt_device_info odi ON odi.id = dopt.id
+      LEFT JOIN project_device pd ON pd.device_id = dopt.id
+      WHERE
+	    pd.project_id = #{projectId}
+    </select>
+</mapper>

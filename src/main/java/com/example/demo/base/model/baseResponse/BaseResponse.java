@@ -60,18 +60,15 @@ public class BaseResponse<T> {
     public BaseResponse(ResultEnum result) {
         this.code = result.getCode();
         this.msg = result.getMsg();
-        this.data = (T) "";
     }
 
     public BaseResponse(ResultEnum result, String msg) {
         this.code = result.getCode();
         this.msg = result.getMsg() + msg;
-        this.data = (T) "";
     }
 
     public BaseResponse(CheckException checkException) {
         this.code = checkException.getCode();
         this.msg = checkException.getMsg();
-        this.data = (T) "";
     }
 }
