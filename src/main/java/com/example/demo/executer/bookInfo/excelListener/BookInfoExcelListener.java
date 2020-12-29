@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;
 
+/**
+ * @author long_tao
+ */
 @Slf4j
 public class BookInfoExcelListener extends AnalysisEventListener<BookInfoExcelModel> {
 
@@ -49,7 +52,7 @@ public class BookInfoExcelListener extends AnalysisEventListener<BookInfoExcelMo
 
     @SneakyThrows
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
         datas.forEach(data -> {
             //考虑到导入书籍数量可能上十万，此处使用线程池

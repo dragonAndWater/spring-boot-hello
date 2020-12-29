@@ -19,7 +19,6 @@ import com.example.demo.executer.bookInfo.model.BookInfoModel;
 import com.example.demo.executer.bookInfo.service.BookInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,11 +43,15 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "bookInfo")
 public class BookInfoController {
 
-    //按类型装配
+    /**
+     * 按类型装配
+     **/
     @Autowired
     private BookInfoService bookInfoService;
 
-    //按照名称进行装配
+    /**
+     * 按照名称进行装配
+     **/
     @Resource
     private ExecutorService executorService;
 
@@ -88,17 +91,17 @@ public class BookInfoController {
      **/
     @BaseAroundAnnotation
     @RequestMapping("saveOrUpdate")
-    public BaseResponse saveOrUpdate(@RequestBody BookInfoModel model) {
+    public BaseResponse<Boolean> saveOrUpdate(@RequestBody BookInfoModel model) {
         //saveOrUpdate 内部逻辑 !StringUtils.checkValNull(idVal) && !Objects.isNull(this.getById((Serializable)idVal)) ? this.updateById(entity) : this.save(entity)
         Boolean flag = bookInfoService.saveOrUpdate(model);
-        return new BaseResponse(ResultEnum.SUCCESS, flag);
+        return new BaseResponse<>(ResultEnum.SUCCESS, flag);
     }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
-    public BaseResponse selectBookInfo(@RequestBody BookInfoModel model) {
+    public BaseResponse<BookInfoModel> selectBookInfo(@RequestBody BookInfoModel model) {
         BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId, model.getId()));
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+        return new BaseResponse<>(ResultEnum.SUCCESS, bookInfoModel);
     }
 
     /**
@@ -108,22 +111,10 @@ public class BookInfoController {
      **/
     @BaseBeforeAnnotation
     @RequestMapping("selectBookList")
-    public BaseResponse selectBookList(@RequestBody BookInfoModel model) {
+    public BaseResponse<List<BookInfoModel>> selectBookList(@RequestBody BookInfoModel model) {
         model.setPageQuery();
         List<BookInfoModel> bookInfoList = bookInfoService.selectBookList(model);
-//        bookInfoList.forEach(bookInfo -> {
-//            executorService.execute(() -> {
-//                try {
-//                    log.info("调用线程池执行List的每一条数据：{}", bookInfo.getBookName());
-//                    Thread.sleep(1000);
-//                    log.info("线程睡眠1秒");
-//                } catch (Exception e) {
-//                    log.error("异常：" + e);
-//                }
-//
-//            });
-//        });
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoList);
+        return new BaseResponse<>(ResultEnum.SUCCESS, bookInfoList);
     }
 
     /**
@@ -133,7 +124,7 @@ public class BookInfoController {
      **/
     @BaseBeforeAnnotation
     @RequestMapping("getAll2")
-    public BaseResponse getAll2(@RequestBody BookInfoModel model) {
+    public BaseResponse<List<Object>> getAll2(@RequestBody BookInfoModel model) {
         List<BookInfoModel> bookInfoList = bookInfoService.selectBookList(model);
         List<Future<Object>> resultList = new ArrayList<>();
         List<Object> retList = new ArrayList<>();
@@ -146,9 +137,6 @@ public class BookInfoController {
             });
             resultList.add(fal);
         });
-        //关闭线程  此处不能关闭。系统启动后，此线程池只能用一次
-//        executorService.shutdown();
-        //将每个线程的执行结果放到dataList中
         resultList.forEach(fs -> {
             try {
                 retList.add(fs.get());
@@ -156,7 +144,7 @@ public class BookInfoController {
                 e.printStackTrace();
             }
         });
-        return new BaseResponse(ResultEnum.SUCCESS, retList);
+        return new BaseResponse<>(ResultEnum.SUCCESS, retList);
     }
 
     /**
@@ -187,24 +175,21 @@ public class BookInfoController {
 
     @BaseAroundAnnotation
     @RequestMapping("selectBookInfoAndBorrowInfo")
-    public BaseResponse selectBookInfoAndBorrowInfo(@RequestBody BookInfoModel model) {
+    public BaseResponse<List<BookInfoModel>> selectBookInfoAndBorrowInfo(@RequestBody BookInfoModel model) {
         List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
-        return new BaseResponse(ResultEnum.SUCCESS, list);
+        return new BaseResponse<>(ResultEnum.SUCCESS, list);
     }
 
 
     @BaseAroundAnnotation
     @RequestMapping("selectBookInfoByWrapper")
-    public BaseResponse selectBookInfoByWrapper(@RequestBody BookInfoModel model) {
-//        List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
-//        List<BookInfoModel> list = bookInfoService.list(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag, 0));
-        Page<BookInfoModel> page = new Page(model.getPageNo(), model.getPageSize());
+    public BaseResponse<List<BookInfoModel>> selectBookInfoByWrapper(@RequestBody BookInfoModel model) {
+        Page<BookInfoModel> page = new Page<>(model.getPageNo(), model.getPageSize());
         //计数
-        Integer count = bookInfoService.count(new QueryWrapper<BookInfoModel>()
-                .lambda()
-                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
-        );
-        StringUtils.isEmpty("");
+//        Integer count = bookInfoService.count(new QueryWrapper<BookInfoModel>()
+//                .lambda()
+//                .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
+//        );
         //数据
         IPage<BookInfoModel> list = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
@@ -213,7 +198,7 @@ public class BookInfoController {
                 .eq(BookInfoModel::getBookName, "php+").or().eq(BookInfoModel::getBookName, "php-")
                 .orderByDesc(BookInfoModel::getCreateTime)
         );
-        return new BaseResponse(ResultEnum.SUCCESS, count, list.getRecords());
+        return new BaseResponse<>(ResultEnum.SUCCESS, (int)page.getTotal(), list.getRecords());
     }
 
     @RequestMapping("testJSONObject")
@@ -228,7 +213,7 @@ public class BookInfoController {
      **/
     @BaseAroundAnnotation
     @RequestMapping("testStream")
-    public List testStream(@RequestBody BookInfoModel model) {
+    public List<BookInfoModel> testStream(@RequestBody BookInfoModel model) {
         List<BookInfoModel> bookInfoLists = bookInfoService.list(new QueryWrapper<BookInfoModel>()
                 .lambda()
                 .eq(BookInfoModel::getBookType, model.getBookType()));
@@ -248,7 +233,7 @@ public class BookInfoController {
      **/
     @BaseAroundAnnotation
     @RequestMapping("testStreamLimit")
-    public List testStreamLimit(@RequestBody BookInfoModel model) {
+    public List<BookInfoModel> testStreamLimit(@RequestBody BookInfoModel model) {
         List<BookInfoModel> list = bookInfoService.list(new QueryWrapper<BookInfoModel>()
                 .lambda()
                 .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
@@ -268,7 +253,7 @@ public class BookInfoController {
      **/
     @BaseAroundAnnotation
     @RequestMapping("testLambda")
-    public List testLambda(@RequestBody BookInfoModel model) {
+    public List<BookInfoModel> testLambda(@RequestBody BookInfoModel model) {
         List<BookInfoModel> bookInfoModelList = bookInfoService.list(new QueryWrapper<BookInfoModel>()
                 .eq("lose_flag", LoseFlagEnum.UN_LOSE.getCode()));
         return bookInfoModelList;
@@ -278,7 +263,7 @@ public class BookInfoController {
     @RequestMapping("bookInfoPage")
     public BaseResponse bookInfoPage(@RequestBody BookInfoModel model) {
         //分页查询 bookLists.getTotal 是总数，getsize是当前数
-        Page page = new Page(model.getPageNo(), model.getPageSize());
+        Page<BookInfoModel> page = new Page<>(model.getPageNo(), model.getPageSize());
         IPage bookLists = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
                 .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
@@ -289,7 +274,7 @@ public class BookInfoController {
     }
 
     @RequestMapping("selectByAnnonation")
-    public List  selectByAnnonation(@RequestBody BookInfoModel model){
+    public List<BookInfoModel> selectByAnnonation(@RequestBody BookInfoModel model){
         return bookInfoService.selectByAnnonation(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag,LoseFlagEnum.UN_LOSE.getCode()));
     }
 

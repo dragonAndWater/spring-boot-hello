@@ -1,19 +1,47 @@
-id -主键id
-tenant -公司id
-start_ip -起始IP
-end_ip -结束IP
-snmp_version -SNMP版本
-snmp_port-SNMP端口
-timeout-超时（ms）
-reTryies -重试次数
-read_community -可读团体号
-snmp_user-SNMP用户
-security_level -安全模式
-auth_algorithm -认证算法：MD5或者SHA
-auth_password-认证密码
-privacy_algorithm-加密算法
-privacy_password -加密密码
-link_protocol-链路发现协议:lldp stp rstp aft port
-description-描述
-
-
+{
+  "id": "4106736657213034496",
+  "deleteIds": null,
+  "productFunctionName": "test_attr_122501",
+  "productPropertyName": "test122501",
+  "visitPattern": "R",
+  "description": "sss",
+  "dataType": "5",
+  "textLength": "",
+  "relationKeyToRelation": [],
+  "relationValueToRelation": [],
+  "unitCodeId": null,
+  "productFunctionFormChildren": [
+    {
+      "functionUsed": null,
+      "productFunctionName": "a1",
+      "productPropertyName": "a11",
+      "dataType": "4",
+      "visitPattern": "R",
+      "relationKeyToRelation": [
+        null
+      ],
+      "relationValueToRelation": [
+        null
+      ],
+      "unitCodeId": null,
+      "profileName": null,
+      "textLength": 50,
+      "id": "4106736657426944000"
+    },
+    {
+      "productFunctionName": "a2",
+      "productPropertyName": "a22",
+      "dataType": "2",
+      "visitPattern": "RW",
+      "relationKeyToRelation": [
+        "1"
+      ],
+      "relationValueToRelation": [
+        "50"
+      ],
+      "unitCodeId": "688015751835025408",
+      "profileName": "",
+      "textLength": ""
+    }
+  ]
+}

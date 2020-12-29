@@ -5,6 +5,9 @@ import com.example.demo.base.exception.CheckException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+/**
+ * @author long_tao
+ */
 @Data
 public class BaseResponse<T> {
     /**

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * @author long_tao
+ */
 @Slf4j
 public class Snake2Camel_DDL {
     private static String FILE_PATH = "E:/1.IDEA/Workspace/spring-boot-hello/src/main/java/com/example/demo/";
@@ -76,9 +79,7 @@ public class Snake2Camel_DDL {
 
     public static String getDataType(String str) {
         switch (str) {
-            //默认放到default里面
-//            case "varchar":
-//                return "String";
+            //根据mysql数据类型转换成java数据类型
             case "bigint":
                 return "Long";
             case "decimal":
@@ -91,6 +92,7 @@ public class Snake2Camel_DDL {
             case "float":
                 return "Float";
             case "int":
+            case "tinyint":
                 return "Integer";
             default:
                 return "String";
