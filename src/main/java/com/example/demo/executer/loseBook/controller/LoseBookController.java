@@ -1,6 +1,6 @@
 package com.example.demo.executer.loseBook.controller;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
@@ -27,7 +27,7 @@ public class LoseBookController {
 //        if (flag) {
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -37,7 +37,7 @@ public class LoseBookController {
 //        if (flag) {
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -58,7 +58,7 @@ public class LoseBookController {
     public BaseResponse getRealAmt(@RequestBody LoseBookModel model) {
         try {
             LoseBookModel loseBookModel = loseBookService.getRealAmt(model);
-            return new BaseResponse(ResultEnum.SUCCESS, loseBookModel);
+            return new BaseResponse(Msg.SUCCESS, loseBookModel);
         } catch (CheckException e) {
             return new BaseResponse(e);
         }

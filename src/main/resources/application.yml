@@ -1,0 +1,168 @@
+##开发环境配置
+#server:
+#  #服务端口
+#  port: 8073
+#  servlet:
+#    # 项目contextPath
+#    context-path: /scene-editor
+#  tomcat:
+#    # tomcat的URI编码
+#    uri-encoding: UTF-8
+#    # tomcat最大线程数，默认为200
+#    max-threads: 800
+#    # Tomcat启动初始化的线程数，默认值25
+#    min-spare-threads: 30
+#
+##数据源配置
+#spring:
+#  thymeleaf:
+#    mode: HTML
+#    encoding: utf-8
+#    # 禁用缓存
+#    cache: false
+#  messages:
+#    #国际化资源文件路径
+#    basename: i18n/messages
+#  jackson:
+#    time-zone: GMT+8
+#    date-format: yyyy-MM-dd HH:mm:ss
+#  profiles:
+#    active: druid
+#
+#  devtools:
+#    restart:
+#      #热部署开关
+#      enabled: true
+#
+#  datasource:
+#    type: com.alibaba.druid.pool.DruidDataSource
+#    #        driverClassName: oracle.jdbc.driver.OracleDriver
+#    driverClassName: com.mysql.jdbc.Driver
+#    druid:
+#      # 注意（名称不支持大写和下划线可用中横线 比如 错误 的命名（slave_**, slaveTwo）)
+#      master: #主库   allowMultiQueries=true 允许 执行多条SQL
+#        #测试环境
+#        #                url: jdbc:mysql://10.206.20.110:13306/camunda?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+#        #                username: root
+#        #                password: MmtKWC9UcmhRN2w0L1JlWXJZYjNJQT09
+#        #总部大楼
+#        url: jdbc:mysql://11.222.60.13:3306/camunda?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+#        username: root
+#        password: WkhKLy9wMG0wSGxVQjhrOXppWWMyZz09
+#      #            slave:  #从库
+#      #                open: false
+#      #                url: jdbc:mysql://10.206.20.188:3306/scene_editor?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowMultiQueries=true
+#      #                username: root
+#      #                password: MmtKWC9UcmhRN2w0L1JlWXJZYjNJQT09
+#      # 初始连接数
+#      initial-size: 10
+#      # 最大连接池数量
+#      max-active: 100
+#      # 最小连接池数量
+#      min-idle: 10
+#      # 配置获取连接等待超时的时间
+#      max-wait: 60000
+#      # 打开PSCache，并且指定每个连接上PSCache的大小
+#      pool-prepared-statements: true
+#      max-pool-prepared-statement-per-connection-size: 20
+#      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+#      timeBetweenEvictionRunsMillis: 60000
+#      # 配置一个连接在池中最小生存的时间，单位是毫秒
+#      min-evictable-idle-time-millis: 300000
+#      validation-query: SELECT 1 FROM DUAL
+#      test-while-idle: true
+#      test-on-borrow: false
+#      test-on-return: false
+#      stat-view-servlet:
+#        enabled: true
+#        url-pattern: /monitor/druid/*
+#      filter:
+#        stat:
+#          log-slow-sql: true
+#          slow-sql-millis: 1000
+#          merge-sql: false
+#        wall:
+#          config:
+#            multi-statement-allow: true
+#
+##日志配置
+#logging:
+#  level:
+#    com.sccl: debug
+#    ccs.enrising: debug
+#    org.springframework: WARN
+#    org.spring.springboot.dao: debug
+#
+## MyBatis
+#mybatis:
+#  # 搜索指定包别名
+#  typeAliasesPackage: com.sccl
+#  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+#  mapperLocations: classpath*:mybatis/**/*Mapper.xml
+#  # 加载全局的配置文件
+#  configLocation: classpath:mybatis/mybatis-config.xml
+#
+## PageHelper 单数据源
+#pagehelper:
+#  helperDialect: mysql
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql
+#
+## 防止XSS攻击
+#xss:
+#  # 过滤开关
+#  enabled: true
+#  # 排除链接（多个用逗号分隔）
+#  excludes: /system/notice/*
+#  # 匹配链接
+#  urlPatterns: /system/*,/monitor/*,/tool/*
+#
+## 附件
+#file:
+#  attachments:
+#    #下载临时目录
+#    downloadTemp:
+#      dir: /Usres/liuwenjun/desktop
+#
+##附件
+#ccs:
+#  #复制流程的接口
+#  workflow:
+#    url: http://10.206.20.116/iot/visWorkflow/sceneCopyWf
+#  component:
+#    attachment:
+#      #      url: http://10.206.20.116:2001/attachment #测试环境
+#      url: http://11.222.60.12:2001/attachment #总部大楼
+#      maxFileSize: 50MB #非必须，缺省50MB
+#      maxRequestSize: 200MB #非必须，缺省200MB
+#
+##雪花ID生成器版本
+#snowflakeID: 1.2
+#
+##用户中心
+#auth:
+#  #  appId: b45acbde2xxb47f3adeac2c3e7a2ff3e
+#  #  appKey: e6387d208xxf4884b7ab337a9380d5bd
+#  appId: 89f2e4142e464d7584c50bc19304901c
+#  appKey: 43d61d339524473680667e214273705b
+#  projectId: 4112200624450441216
+#  clientId: scene_editor #认证中心分配的客户端ID
+#  clientSecret: 123456 #认证中心分配的客户端密钥
+#  onlyOneOnline: 0 #是否禁止账户多终端登陆 1是0否
+#  #  url: http://10.206.20.116:2001/  #测试环境
+#  url: http://11.222.60.12:2001/ #总部大楼
+#  admin:
+#    url: ${auth.url}/userCenter #认证中心地址
+#
+##北向
+#north:
+#  queryDeviceShadow: device-v001/queryDeviceShadow
+#  downCommand: southgetway-v001/mtGateway/function/sendMessage
+#
+##代理
+#default:
+#  agentHost:
+#  agentPort:
+#  agentOpen: 0
+#

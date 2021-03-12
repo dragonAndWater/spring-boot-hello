@@ -1,6 +1,6 @@
 package com.example.demo.base.exception;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import lombok.Data;
 /**
  * @Author longtao
@@ -13,13 +13,13 @@ public class CheckException extends Exception {
     private String msg;
 
 
-    public CheckException(ResultEnum resultEnum,String msg){
+    public CheckException(Msg resultEnum, String msg){
         this.code = resultEnum.getCode();
         this.msg = resultEnum.getMsg()+":" + msg;
     }
 
-    public CheckException(ResultEnum resultEnum){
-        this.code = resultEnum.getCode();
-        this.msg = resultEnum.getMsg();
+    public CheckException(Msg msg){
+        this.code = msg.getCode();
+        this.msg = msg.getMsg();
     }
 }

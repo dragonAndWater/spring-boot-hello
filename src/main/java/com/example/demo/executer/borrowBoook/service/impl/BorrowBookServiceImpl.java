@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.arithmetic.BookArithmetic;
 import com.example.demo.base.Enum.BorrowFlagEnum;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.bookCharge.model.BookChargeModel;
@@ -78,7 +78,6 @@ public class BorrowBookServiceImpl extends ServiceImpl<BorrowBookDao,BorrowBookM
             readerInfoService.judgeBorrowTimes(borrowBookModel.getReaderId());
 
             //登记借阅流水
-//            borrowBookModel.setId(this.getBaseId());
             borrowBookModel.setBookId(bookId);
             borrowBookModel.setBorrowFlag(BorrowFlagEnum.LEN_OUT.getCode());
             borrowBookModel.setBorrowDate(new Date());
@@ -96,11 +95,10 @@ public class BorrowBookServiceImpl extends ServiceImpl<BorrowBookDao,BorrowBookM
             //更新t_reader_info剩余借阅量
             ReaderInfoModel readerInfoModel = new ReaderInfoModel();
             readerInfoModel.setId(borrowBookModel.getReaderId());
-//            readerInfoModel.setBorrowUsableTimes(readerInfoService.getOne(new QueryWrapper<ReaderInfoModel>().lambda().eq(ReaderInfoModel::getId,readerInfoModel.getId()).getBorrowUsableTimes() - 1);//读者剩余借阅次数-1
             readerInfoService.update(new UpdateWrapper<ReaderInfoModel>(readerInfoModel));
             resultMap.put(bookId, flag);
         }
-        return new BaseResponse(ResultEnum.SUCCESS, resultMap);
+        return new BaseResponse(Msg.SUCCESS, resultMap);
     }
 
     /**
@@ -210,7 +208,7 @@ public class BorrowBookServiceImpl extends ServiceImpl<BorrowBookDao,BorrowBookM
         borrowBookModel.setCardId(cardId);
         List<BorrowBookModel> borrowBookModelList = selectOverdueBorrowList(borrowBookModel);
         if (null != borrowBookModelList && borrowBookModelList.size() > 0) {
-            throw new CheckException(ResultEnum.CHECK_BORROW_OVERDUE);
+            throw new CheckException(Msg.CHECK_BORROW_OVERDUE);
         }
         return true;
     }

@@ -1,6 +1,6 @@
 package com.example.demo.executer.readerCardInfo.controller;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.Enum.UsableFlagEnum;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.exception.CheckException;
@@ -40,9 +40,9 @@ public class ReaderCardInfoController {
     public BaseResponse insertReaderCard(@RequestBody ReaderCardInfoModel model) {
         Boolean flag = readerCardInfoService.insertCard(model);
         if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -52,7 +52,7 @@ public class ReaderCardInfoController {
 //        if(flag){
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -68,7 +68,7 @@ public class ReaderCardInfoController {
     public BaseResponse selectReaderCardList(@RequestBody ReaderCardInfoModel model) {
         model.setPageQuery();
         List<ReaderCardInfoModel> bookInfoModel = readerCardInfoService.selectReaderCardList(model);
-        return new BaseResponse(ResultEnum.SUCCESS, bookInfoModel);
+        return new BaseResponse(Msg.SUCCESS, bookInfoModel);
     }
 
     /**
@@ -82,10 +82,10 @@ public class ReaderCardInfoController {
     public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) throws Exception{
         if (StringUtils.isEmpty(readerCardInfoModel.getId())) {
             //抛出异常，GlobalExceptionHandler中handleException(CheckException e) 设置返回内容
-            throw new CheckException(ResultEnum.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");
+            throw new CheckException(Msg.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");
         }
         if (StringUtils.isEmpty(readerCardInfoModel.getReaderId())) {
-            throw new CheckException(ResultEnum.CHECK_ATTRIBUTE_FAIL, "读者ID不能为空");
+            throw new CheckException(Msg.CHECK_ATTRIBUTE_FAIL, "读者ID不能为空");
         }
         readerCardInfoModel.setBindDate(new Date());
         readerCardInfoModel.setUsableFlag(UsableFlagEnum.BIND.getCode());
@@ -98,6 +98,6 @@ public class ReaderCardInfoController {
         readerInfoModel.setRegisterDate(new Date());
         readerInfoService.updateById(readerInfoModel);
 
-        return new BaseResponse(ResultEnum.SUCCESS);
+        return new BaseResponse(Msg.SUCCESS);
     }
 }

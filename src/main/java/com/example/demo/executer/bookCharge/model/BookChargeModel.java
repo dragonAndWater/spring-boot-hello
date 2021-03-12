@@ -1,5 +1,6 @@
 package com.example.demo.executer.bookCharge.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
+@TableName("t_book_charge")
 public class BookChargeModel extends BaseModel {
     /**
      * 书籍类别

@@ -188,7 +188,18 @@
             <artifactId>rocket-api-boot-starter</artifactId>
             <version>2.2.2.RELEASE</version>
         </dependency>
-
+        <!--    拼音    -->
+        <dependency>
+            <groupId>com.belerweb</groupId>
+            <artifactId>pinyin4j</artifactId>
+            <version>2.5.1</version>
+        </dependency>
+        <!--分页插件-->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.12</version>
+        </dependency>
     </dependencies>
 
     <build>

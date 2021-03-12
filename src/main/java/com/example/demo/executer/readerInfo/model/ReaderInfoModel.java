@@ -1,5 +1,6 @@
 package com.example.demo.executer.readerInfo.model;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.example.demo.base.model.baseModel.BaseModel;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -44,6 +45,11 @@ public class ReaderInfoModel extends BaseModel {
      * 剩余借阅量
      **/
     private Long borrowUsableTimes;
+    /**
+     * 是否删除：0-未删除，1-已删除
+     **/
+    @TableLogic(value = "0",delval = "1")
+    private Integer isDel;
 
     public ReaderInfoModel() {
     }

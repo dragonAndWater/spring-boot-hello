@@ -3,7 +3,7 @@ package com.example.demo.executer.readerBlackList.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.readerBlackList.excelListener.BlackListExcelListener;
@@ -31,9 +31,9 @@ public class ReaderBlackListController {
     public BaseResponse insertReaderBlackList(@RequestBody ReaderBlackListModel model) {
         Boolean flag = readerBlackListService.save(model);
         if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -43,7 +43,7 @@ public class ReaderBlackListController {
 //        if(flag){
 //            return new BaseResponse(ResultEnum.SUCCESS);
 //        }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     @BaseBeforeAnnotation
@@ -71,10 +71,10 @@ public class ReaderBlackListController {
             excelReader.finish();
             log.info("------------importExcel end------------");
 
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         } catch (Exception e) {
             log.error("导入表异常：" + e);
-            return new BaseResponse(ResultEnum.ERROR, e.getMessage());
+            return new BaseResponse(Msg.ERROR, e.getMessage());
         }
 
     }

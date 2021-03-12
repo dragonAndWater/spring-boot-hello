@@ -1,6 +1,6 @@
 package com.example.demo.executer.borrowBoook.controller;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseResponse.BaseResponse;
@@ -51,7 +51,7 @@ public class BorrowBookController {
     @RequestMapping("updateOne")
     public BaseResponse updateBorrowBook(@RequestBody List<BorrowBookModel> modelList) {
         Map<String, Boolean> resultMap =  borrowBookService.updateBorrowBook(modelList);
-        return new BaseResponse(ResultEnum.SUCCESS, resultMap);
+        return new BaseResponse(Msg.SUCCESS, resultMap);
 
     }
 
@@ -73,7 +73,7 @@ public class BorrowBookController {
     public BaseResponse selectBorrowList(@RequestBody BorrowBookModel model) {
         model.setPageQuery();
         List<BorrowBookModel> borrowBookModelList = borrowBookService.selectBorrowList(model);
-        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModelList);
+        return new BaseResponse(Msg.SUCCESS, borrowBookModelList);
     }
 
     /**
@@ -113,7 +113,7 @@ public class BorrowBookController {
     @RequestMapping("selectOverdueBorrowList")
     public BaseResponse selectOverdueBorrowList(@RequestBody BorrowBookModel model) {
         List<BorrowBookModel> borrowBookModelList = borrowBookService.selectOverdueBorrowList(model);
-        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModelList);
+        return new BaseResponse(Msg.SUCCESS, borrowBookModelList);
     }
 
     /**
@@ -125,7 +125,7 @@ public class BorrowBookController {
     @RequestMapping("selectNowBorrowList")
     public BaseResponse selectNowBorrowList(@RequestBody BorrowBookModel model) {
         List<BorrowBookModel> borrowBookModelList = borrowBookService.selectNowBorrowList(model);
-        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModelList);
+        return new BaseResponse(Msg.SUCCESS, borrowBookModelList);
     }
 
 
@@ -155,9 +155,9 @@ public class BorrowBookController {
     public BaseResponse getBorrowAmt(@RequestBody BorrowBookModel model) {
         BorrowBookModel borrowmodel = borrowBookService.selectNowByBookId(model);
         if (null == borrowmodel) {
-            return new BaseResponse(ResultEnum.CHECK_BORROW_BOOK);
+            return new BaseResponse(Msg.CHECK_BORROW_BOOK);
         }
         BorrowBookModel borrowBookModel = borrowBookService.getBorrowAmt(borrowmodel);
-        return new BaseResponse(ResultEnum.SUCCESS, borrowBookModel.getBorrowAmt());
+        return new BaseResponse(Msg.SUCCESS, borrowBookModel.getBorrowAmt());
     }
 }

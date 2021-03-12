@@ -1,11 +1,9 @@
 package com.example.demo;
 
-import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.net.ssl.*;
 import java.io.*;
-import java.net.ConnectException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -16,20 +14,22 @@ public class HttpsUtil {
 
     private static class TrustAnyTrustManager implements X509TrustManager {
 
+        @Override
         public void checkClientTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
-
+        @Override
         public void checkServerTrusted(X509Certificate[] chain, String authType)
                 throws CertificateException {
         }
-
+        @Override
         public X509Certificate[] getAcceptedIssuers() {
             return new X509Certificate[] {};
         }
     }
 
     private static class TrustAnyHostnameVerifier implements HostnameVerifier {
+        @Override
         public boolean verify(String hostname, SSLSession session) {
             return true;
         }

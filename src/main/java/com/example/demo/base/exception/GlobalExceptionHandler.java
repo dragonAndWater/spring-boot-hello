@@ -1,6 +1,6 @@
 package com.example.demo.base.exception;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = HttpMessageNotReadableException.class)
     public Object handleException400(HttpServletRequest req, HttpMessageNotReadableException e) {
         e.printStackTrace();
-        return new BaseResponse(ResultEnum.ERROR, "请求的参数中有数据类型或数据格式错误");
+        return new BaseResponse(Msg.ERROR, "请求的参数中有数据类型或数据格式错误");
     }
 
     /**
@@ -57,6 +57,6 @@ public class GlobalExceptionHandler {
     public BaseResponse exceptionHandler(HttpServletRequest req, Exception e) {
         e.printStackTrace();
         log.error("其他异常！原因:", e);
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 }

@@ -2,7 +2,7 @@ package com.example.demo.executer.readerBlackList.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.executer.readerBlackList.dao.ReaderBlackListDao;
 import com.example.demo.executer.readerBlackList.model.BlackListExcel;
@@ -28,7 +28,7 @@ public class ReaderBlackListServiceImpl extends ServiceImpl<ReaderBlackListDao,R
     public Boolean checkBlackList(String readerId) throws CheckException {
         ReaderBlackListModel readerBlackListModel = this.getOne(new QueryWrapper<ReaderBlackListModel>().lambda().eq(ReaderBlackListModel::getReaderId,readerId));
         if(null != readerBlackListModel){
-            throw new CheckException(ResultEnum.CHECK_BLACK_LIST);
+            throw new CheckException(Msg.CHECK_BLACK_LIST);
         }
         return true;
     }

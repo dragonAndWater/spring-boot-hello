@@ -655,6 +655,7 @@ public class LocalDateUtils {
         for (String dateStr : dateStrs2) {
             System.out.println(dateStr);
         }
+        System.out.println("LocalDateTime.now()"+LocalDateTime.now());
     }
 
 }

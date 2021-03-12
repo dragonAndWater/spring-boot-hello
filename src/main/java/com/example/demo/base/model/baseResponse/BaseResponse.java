@@ -1,6 +1,6 @@
 package com.example.demo.base.model.baseResponse;
 
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.exception.CheckException;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -24,7 +24,7 @@ public class BaseResponse<T> {
      * 统计总数
      **/
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Integer count;
+    private Long count;
     /**
      * 返回数据
      **/
@@ -40,32 +40,32 @@ public class BaseResponse<T> {
         this.data = data;
     }
 
-    public BaseResponse(String code, String msg, Integer count, T data) {
+    public BaseResponse(String code, String msg, Long count, T data) {
         this.code = code;
         this.msg = msg;
         this.count = count;
         this.data = data;
     }
 
-    public BaseResponse(ResultEnum result, T data) {
+    public BaseResponse(Msg result, T data) {
         this.code = result.getCode();
         this.msg = result.getMsg();
         this.data = data;
     }
 
-    public BaseResponse(ResultEnum result, Integer count, T data) {
+    public BaseResponse(Msg result, Long count, T data) {
         this.code = result.getCode();
         this.msg = result.getMsg();
         this.count = count;
         this.data = data;
     }
 
-    public BaseResponse(ResultEnum result) {
+    public BaseResponse(Msg result) {
         this.code = result.getCode();
         this.msg = result.getMsg();
     }
 
-    public BaseResponse(ResultEnum result, String msg) {
+    public BaseResponse(Msg result, String msg) {
         this.code = result.getCode();
         this.msg = result.getMsg() + msg;
     }

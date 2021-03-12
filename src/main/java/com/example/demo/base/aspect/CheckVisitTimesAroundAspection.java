@@ -1,11 +1,9 @@
 package com.example.demo.base.aspect;
 
 import com.alibaba.excel.util.StringUtils;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.model.baseModel.BaseModel;
-import com.example.demo.base.model.baseRequest.BaseRequest;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.util.redisUtil.RedisService.RedisService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,12 +11,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
 
 @Aspect
 @Component
@@ -48,7 +43,7 @@ public class CheckVisitTimesAroundAspection {
             for (Object arg : args) {
                 Boolean flag = judgeVisitTimesByUserId(arg);
                 if(!flag){
-                    return new BaseResponse<>(ResultEnum.CHECK_USER_ID_VISIT_TIMES);
+                    return new BaseResponse<>(Msg.CHECK_USER_ID_VISIT_TIMES);
                 }
             }
         } catch (Exception e) {

@@ -3,7 +3,7 @@ package com.example.demo.executer.loseBook.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.demo.arithmetic.BookArithmetic;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.exception.CheckException;
 import com.example.demo.executer.bookInfo.model.BookInfoModel;
 import com.example.demo.executer.bookInfo.service.BookInfoService;
@@ -42,7 +42,7 @@ public class LoseBookServiceImpl extends ServiceImpl<LoseBookDao,LoseBookModel> 
         //是否借阅出去
         BorrowBookModel borrowBookModel = borrowBookService.selectNowByBookId(new BorrowBookModel(loseBookModel.getBookId()));
         if (null == borrowBookModel) {
-            throw new CheckException(ResultEnum.CHECK_BORROW_BOOK);
+            throw new CheckException(Msg.CHECK_BORROW_BOOK);
         }
 
         //根据bookId获取书籍信息 价格

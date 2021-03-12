@@ -1,9 +1,9 @@
 package com.example.demo.base.Enum;
 
-public enum ResultEnum {
-    SUCCESS("000000", "交易成功"),
+public enum Msg {
+    SUCCESS("000000", "请求成功"),
 
-    ERROR("000001", "交易失败"),
+    ERROR("000001", "请求失败"),
 
     CHECK_USER_ID_VISIT_TIMES("100001", "用户达到最大访问次数限制"),
 
@@ -31,7 +31,7 @@ public enum ResultEnum {
      **/
     private String msg;
 
-    ResultEnum(String code, String msg) {
+    Msg(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }

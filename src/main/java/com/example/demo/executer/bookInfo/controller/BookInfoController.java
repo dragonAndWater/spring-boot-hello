@@ -1,6 +1,7 @@
 package com.example.demo.executer.bookInfo.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.EasyExcelFactory;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.fastjson.JSONObject;
@@ -9,7 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.demo.base.Enum.LoseFlagEnum;
-import com.example.demo.base.Enum.ResultEnum;
+import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseAroundAnnotation;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.model.baseResponse.BaseResponse;
@@ -19,6 +20,8 @@ import com.example.demo.executer.bookInfo.model.BookInfoModel;
 import com.example.demo.executer.bookInfo.service.BookInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -57,12 +60,13 @@ public class BookInfoController {
 
     @BaseBeforeAnnotation
     @RequestMapping("insertOne")
+    @Transactional
     public BaseResponse insertBoookInfo(@RequestBody BookInfoModel model) {
         Boolean flag = bookInfoService.save(model);
         if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     /**
@@ -79,9 +83,9 @@ public class BookInfoController {
                 .eq(BookInfoModel::getId, model.getId())
         );
         if (flag) {
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         }
-        return new BaseResponse(ResultEnum.ERROR);
+        return new BaseResponse(Msg.ERROR);
     }
 
     /**
@@ -94,14 +98,14 @@ public class BookInfoController {
     public BaseResponse<Boolean> saveOrUpdate(@RequestBody BookInfoModel model) {
         //saveOrUpdate 内部逻辑 !StringUtils.checkValNull(idVal) && !Objects.isNull(this.getById((Serializable)idVal)) ? this.updateById(entity) : this.save(entity)
         Boolean flag = bookInfoService.saveOrUpdate(model);
-        return new BaseResponse<>(ResultEnum.SUCCESS, flag);
+        return new BaseResponse<>(Msg.SUCCESS, flag);
     }
 
     @BaseBeforeAnnotation
-    @RequestMapping("selectOne")
+    @PostMapping("selectOne")
     public BaseResponse<BookInfoModel> selectBookInfo(@RequestBody BookInfoModel model) {
         BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId, model.getId()));
-        return new BaseResponse<>(ResultEnum.SUCCESS, bookInfoModel);
+        return new BaseResponse<>(Msg.SUCCESS, bookInfoModel);
     }
 
     /**
@@ -114,7 +118,7 @@ public class BookInfoController {
     public BaseResponse<List<BookInfoModel>> selectBookList(@RequestBody BookInfoModel model) {
         model.setPageQuery();
         List<BookInfoModel> bookInfoList = bookInfoService.selectBookList(model);
-        return new BaseResponse<>(ResultEnum.SUCCESS, bookInfoList);
+        return new BaseResponse<>(Msg.SUCCESS, bookInfoList);
     }
 
     /**
@@ -144,7 +148,7 @@ public class BookInfoController {
                 e.printStackTrace();
             }
         });
-        return new BaseResponse<>(ResultEnum.SUCCESS, retList);
+        return new BaseResponse<>(Msg.SUCCESS, retList);
     }
 
     /**
@@ -158,6 +162,7 @@ public class BookInfoController {
         try {
             log.info("------------importExcel start------------");
             //读取excel
+            EasyExcelFactory.read(file.getInputStream()).sheet(0).headRowNumber(4).head(BookInfoExcelModel.class).doReadSync();
             ExcelReader excelReader = EasyExcel.read(file.getInputStream(), BookInfoExcelModel.class, new BookInfoExcelListener(new BookInfoExcelModel(), bookInfoService, executorService)).build();
             //读取excel第一页内容
             ReadSheet readSheet = EasyExcel.readSheet(0).build();
@@ -165,11 +170,11 @@ public class BookInfoController {
             // 这里千万别忘记关闭，读的时候会创建临时文件，到时磁盘会崩的
             excelReader.finish();
             log.info("------------importExcel end------------");
-            return new BaseResponse(ResultEnum.SUCCESS);
+            return new BaseResponse(Msg.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("导入表异常：" + e);
-            return new BaseResponse(ResultEnum.ERROR, e.getMessage());
+            return new BaseResponse(Msg.ERROR, e.getMessage());
         }
     }
 
@@ -177,7 +182,7 @@ public class BookInfoController {
     @RequestMapping("selectBookInfoAndBorrowInfo")
     public BaseResponse<List<BookInfoModel>> selectBookInfoAndBorrowInfo(@RequestBody BookInfoModel model) {
         List<BookInfoModel> list = bookInfoService.selectBookInfoAndBorrowInfo(model);
-        return new BaseResponse<>(ResultEnum.SUCCESS, list);
+        return new BaseResponse<>(Msg.SUCCESS, list);
     }
 
 
@@ -198,7 +203,7 @@ public class BookInfoController {
                 .eq(BookInfoModel::getBookName, "php+").or().eq(BookInfoModel::getBookName, "php-")
                 .orderByDesc(BookInfoModel::getCreateTime)
         );
-        return new BaseResponse<>(ResultEnum.SUCCESS, (int)page.getTotal(), list.getRecords());
+        return new BaseResponse(Msg.SUCCESS, page.getTotal(), list.getRecords());
     }
 
     @RequestMapping("testJSONObject")
@@ -255,7 +260,7 @@ public class BookInfoController {
     @RequestMapping("testLambda")
     public List<BookInfoModel> testLambda(@RequestBody BookInfoModel model) {
         List<BookInfoModel> bookInfoModelList = bookInfoService.list(new QueryWrapper<BookInfoModel>()
-                .eq("lose_flag", LoseFlagEnum.UN_LOSE.getCode()));
+                .eq("lose_flag", model.getLoseFlag()));
         return bookInfoModelList;
     }
 
@@ -267,17 +272,22 @@ public class BookInfoController {
         IPage bookLists = bookInfoService.page(page, new QueryWrapper<BookInfoModel>()
                 .lambda()
                 .eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode())
-                .notBetween(BookInfoModel::getBookType,"6","8")
-                .like(BookInfoModel::getBookName,"软件")
+                .notBetween(BookInfoModel::getBookType, "6", "8")
+                .like(BookInfoModel::getBookName, "软件")
         );
-        return new BaseResponse(ResultEnum.SUCCESS,(int) bookLists.getTotal(),bookLists.getRecords());
+        return new BaseResponse(Msg.SUCCESS, bookLists.getTotal(), bookLists.getRecords());
     }
 
     @RequestMapping("selectByAnnonation")
-    public List<BookInfoModel> selectByAnnonation(@RequestBody BookInfoModel model){
-        return bookInfoService.selectByAnnonation(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag,LoseFlagEnum.UN_LOSE.getCode()));
+    public List<BookInfoModel> selectByAnnonation(@RequestBody BookInfoModel model) {
+        return bookInfoService.selectByAnnonation(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getLoseFlag, LoseFlagEnum.UN_LOSE.getCode()));
     }
 
+    @BaseAroundAnnotation
+    @RequestMapping("getSelect")
+    public void getSelect() {
+
+    }
 
 
 }
