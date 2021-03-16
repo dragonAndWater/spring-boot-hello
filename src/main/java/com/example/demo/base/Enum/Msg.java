@@ -19,6 +19,14 @@ public enum Msg {
 
     CHECK_BORROW_BOOK("100007", "书籍未在借阅表登记"),
 
+    CHECK_CARD("100008", "借阅卡(id)检查不通过"),
+
+    CHECK_PHONE("100009", "电话检查不通过"),
+
+    CHECK_NAME("100010", "名称检查不通过"),
+
+    CHECK_CARD_("100010", "名称检查不通过"),
+
     PROCESSING("999999", "交易处理中");
 
 

@@ -1,6 +1,8 @@
 package com.example.demo;
 
+import io.netty.util.internal.StringUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.StringUtils;
 
 /**
  * @Author longtao
@@ -9,7 +11,8 @@ import lombok.extern.slf4j.Slf4j;
  **/
 @Slf4j
 public class ListDemo {
-
+    public static void main(String[] args) {
+    }
 
 
 }

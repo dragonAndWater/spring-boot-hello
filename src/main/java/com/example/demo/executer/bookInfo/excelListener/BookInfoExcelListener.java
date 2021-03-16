@@ -29,6 +29,7 @@ public class BookInfoExcelListener extends AnalysisEventListener<BookInfoExcelMo
      * 可以通过实例获取该值
      */
     private LinkedList<BookInfoExcelModel> datas = new LinkedList<BookInfoExcelModel>();
+    private Integer count = 0;
 
 
     public BookInfoExcelListener(BookInfoExcelModel bookInfoExcelModel, BookInfoService bookInfoService,ExecutorService executorService) {

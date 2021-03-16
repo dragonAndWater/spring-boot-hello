@@ -1,9 +1,11 @@
 package com.example.demo.executer.readerCardInfo.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.Enum.UsableFlagEnum;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.exception.CheckException;
+import com.example.demo.base.model.baseModel.BaseModel;
 import com.example.demo.base.model.baseResponse.BaseResponse;
 import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
 import com.example.demo.executer.readerCardInfo.service.ReaderCardInfoService;
@@ -13,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -56,11 +59,15 @@ public class ReaderCardInfoController {
     }
 
     @BaseBeforeAnnotation
-    @RequestMapping("selectOne")
+    @PostMapping("selectOne")
     public BaseResponse selectReaderCard(@RequestBody ReaderCardInfoModel model) {
-//        ReaderCardInfoModel bookInfoModel = readerCardInfoService.selectOne(model.getId());
-//        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
-        return null;
+        QueryWrapper<ReaderCardInfoModel> queryWrapper = new QueryWrapper<ReaderCardInfoModel>();
+//        queryWrapper.lambda().eq(ReaderCardInfoModel::getUsableFlag, "0");
+        if (!StringUtils.isEmpty(model.getId())) {
+            queryWrapper.lambda().eq(ReaderCardInfoModel::getId, model.getId());
+        }
+        ReaderCardInfoModel cardModel = readerCardInfoService.getOne(queryWrapper);
+        return new BaseResponse(Msg.SUCCESS, cardModel);
     }
 
     @BaseBeforeAnnotation
@@ -79,7 +86,7 @@ public class ReaderCardInfoController {
     @Transactional
     @BaseBeforeAnnotation
     @RequestMapping("bindReadCard")
-    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) throws Exception{
+    public BaseResponse bindReadCard(@RequestBody ReaderCardInfoModel readerCardInfoModel) throws Exception {
         if (StringUtils.isEmpty(readerCardInfoModel.getId())) {
             //抛出异常，GlobalExceptionHandler中handleException(CheckException e) 设置返回内容
             throw new CheckException(Msg.CHECK_ATTRIBUTE_FAIL, "借阅卡ID不能为空");

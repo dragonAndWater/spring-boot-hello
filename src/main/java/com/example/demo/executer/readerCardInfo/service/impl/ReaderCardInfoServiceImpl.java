@@ -23,6 +23,7 @@ public class ReaderCardInfoServiceImpl extends ServiceImpl<ReaderCardInfoDao,Rea
 
     @Override
     public List<ReaderCardInfoModel> selectReaderCardList(ReaderCardInfoModel readerCardInfoModel) {
-        return readerCardInfoDao.selectReaderCardList(readerCardInfoModel);
+//        return readerCardInfoDao.selectReaderCardList(readerCardInfoModel);
+        return null;
     }
 }

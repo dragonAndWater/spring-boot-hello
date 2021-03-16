@@ -104,7 +104,10 @@ public class BookInfoController {
     @BaseBeforeAnnotation
     @PostMapping("selectOne")
     public BaseResponse<BookInfoModel> selectBookInfo(@RequestBody BookInfoModel model) {
-        BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>().lambda().eq(BookInfoModel::getId, model.getId()));
+        BookInfoModel bookInfoModel = bookInfoService.getOne(new QueryWrapper<BookInfoModel>()
+                .lambda()
+                .eq(BookInfoModel::getId, model.getId())
+        );
         return new BaseResponse<>(Msg.SUCCESS, bookInfoModel);
     }
 

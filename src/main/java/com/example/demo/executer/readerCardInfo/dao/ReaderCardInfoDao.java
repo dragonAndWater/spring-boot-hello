@@ -10,5 +10,4 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ReaderCardInfoDao extends BaseMapper<ReaderCardInfoModel> {
-    List<ReaderCardInfoModel> selectReaderCardList(ReaderCardInfoModel readerCardInfoModel);
 }

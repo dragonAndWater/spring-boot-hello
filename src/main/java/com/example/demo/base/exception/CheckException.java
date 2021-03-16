@@ -1,5 +1,6 @@
 package com.example.demo.base.exception;
 
+import com.example.demo.base.Enum.Check;
 import com.example.demo.base.Enum.Msg;
 import lombok.Data;
 /**
@@ -21,5 +22,10 @@ public class CheckException extends Exception {
     public CheckException(Msg msg){
         this.code = msg.getCode();
         this.msg = msg.getMsg();
+    }
+
+    public CheckException(Check check){
+        this.code = check.getCode();
+        this.msg = Check.CHECK_MUST+check.getMsg();
     }
 }

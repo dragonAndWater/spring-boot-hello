@@ -1,12 +1,16 @@
 package com.example.demo.executer.readerInfo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.demo.base.Enum.Check;
 import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseAroundAnnotation;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.annonation.CheckVisitTimesAroundAnnotation;
+import com.example.demo.base.exception.CheckException;
 import com.example.demo.base.model.baseModel.BaseModel;
 import com.example.demo.base.model.baseResponse.BaseResponse;
+import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
+import com.example.demo.executer.readerCardInfo.service.ReaderCardInfoService;
 import com.example.demo.executer.readerInfo.model.ReaderInfoModel;
 import com.example.demo.executer.readerInfo.service.ReaderInfoService;
 import com.github.pagehelper.PageHelper;
@@ -28,6 +32,8 @@ public class ReaderInfoController {
 
     @Autowired
     private ReaderInfoService readerInfoService;
+    @Autowired
+    private ReaderCardInfoService readerCardInfoService;
 
     /**
      * @Author longtao
@@ -72,8 +78,28 @@ public class ReaderInfoController {
 
     @BaseAroundAnnotation
     @PostMapping("saveOrUpdate")
-    public BaseResponse saveOrUpdate(@RequestBody ReaderInfoModel model) {
+    public BaseResponse saveOrUpdate(@RequestBody ReaderInfoModel model) throws CheckException {
         //暂无业务检查
+        if (StringUtils.isEmpty(model.getId())) {
+            if (StringUtils.isEmpty(model.getCardId())) {
+                throw new CheckException(Check.CHECK_CARD);
+            } else {
+                ReaderCardInfoModel cardModel = readerCardInfoService.getOne(new QueryWrapper<ReaderCardInfoModel>()
+                        .lambda()
+                        .eq(ReaderCardInfoModel::getUsableFlag, "0")
+                        .eq(ReaderCardInfoModel::getId, model.getCardId())
+                );
+                if (null == cardModel) {
+                    throw new CheckException(Check.CHECK_CARD_NOT_EXIST);
+                }
+            }
+            if (StringUtils.isEmpty(model.getReaderName())) {
+                throw new CheckException(Check.CHECK_NAME);
+            }
+            if (StringUtils.isEmpty(model.getReaderPhone())) {
+                throw new CheckException(Check.CHECK_PHONE);
+            }
+        }
         Boolean flag = readerInfoService.saveOrUpdate(model);
         if (flag) {
             return new BaseResponse(Msg.SUCCESS);
@@ -131,12 +157,13 @@ public class ReaderInfoController {
         ReaderInfoModel readerInfoModel = readerInfoService.getOne(new QueryWrapper<ReaderInfoModel>()
                 .lambda()
                 .eq(ReaderInfoModel::getId, model.getId())
-                .eq(ReaderInfoModel::getReaderPhone,model.getReaderPhone())
-                .eq(ReaderInfoModel::getReaderCardNo,model.getReaderCardNo())
+                .eq(ReaderInfoModel::getReaderPhone, model.getReaderPhone())
+                .eq(ReaderInfoModel::getReaderCardNo, model.getReaderCardNo())
         );
 
-        return new BaseResponse(Msg.SUCCESS,readerInfoModel);
+        return new BaseResponse(Msg.SUCCESS, readerInfoModel);
     }
+
     /**
      * @Author longtao
      * @Date 2021/3/12
@@ -147,10 +174,10 @@ public class ReaderInfoController {
     public BaseResponse deleteList(@RequestBody List<String> ids) {
         //ps：只要有一条数据update 成功，那么flag = true.
         Boolean flag = readerInfoService.removeByIds(ids);
-        if(flag){
+        if (flag) {
             return new BaseResponse(Msg.SUCCESS);
         }
-        return new BaseResponse(Msg.ERROR,":批量删除失败");
+        return new BaseResponse(Msg.ERROR, ":批量删除失败");
 
     }
 

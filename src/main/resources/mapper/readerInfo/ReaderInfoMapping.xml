@@ -30,66 +30,6 @@
         update_time
     </sql>
 
-    <insert id="insertOne" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
-        insert into t_reader_info(
-        id,
-        register_date,
-        card_id,
-        reader_name,
-        reader_phone,
-        reader_card_type,
-        reader_card_no
-        )
-        values(
-        #{id},
-        #{registerDate},
-        #{cardId},
-        #{readerName},
-        #{readerPhone},
-        #{readerCardType},
-        #{readerCardNo}
-        );
-    </insert>
-
-    <update id="updateOne" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel">
-        update t_reader_info set
-        <trim suffixOverrides=",">
-            <if test="registerDate != null">
-                register_date = #{registerDate},
-            </if>
-            <if test="cardId != null">
-                card_id = #{cardId},
-            </if>
-            <if test="readerName != null">
-                reader_name = #{readerName},
-            </if>
-            <if test="readerPhone != null">
-                reader_phone = #{readerPhone},
-            </if>
-            <if test="readerCardType != null">
-                reader_card_type = #{readerCardType},
-            </if>
-            <if test="readerCardNo != null">
-                reader_card_no = #{readerCardNo},
-            </if>
-            <if test="borrowMaxTimes != null">
-                borrow_max_times = #{borrowMaxTimes},
-            </if>
-            <if test="borrowUsableTimes != null">
-                borrow_usable_times = #{borrowUsableTimes},
-            </if>
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
-
-    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_reader_info
-        where id = #{id}
-    </select>
 
     <select id="selectReaderInfoList" parameterType="com.example.demo.executer.readerInfo.model.ReaderInfoModel"
             resultMap="BaseResultMap">
