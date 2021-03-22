@@ -1,0 +1,35 @@
+ /**
+     * 归属组织id
+     */
+    private Long deptid;
+
+    /**
+     * 对应用户id
+     */
+    private Long userid;
+
+    /**
+     * 展示排序
+     */
+    private Integer sort;
+
+    /**
+     * 有效状态
+     */
+    @TableLogic
+    private Integer isDel;
+
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
+
+    /**
+     * 用户ids
+     */
+    private transient userids;

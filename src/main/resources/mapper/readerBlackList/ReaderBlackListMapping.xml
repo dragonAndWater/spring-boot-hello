@@ -20,45 +20,45 @@
         update_time
     </sql>
 
-    <insert id="insertOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
-        insert into t_reader_black_list(
-        id,
-        reader_id,
-        reader_name,
-        black_flag
-        )
-        values(
-        #{id},
-        #{readerId},
-        #{readerName},
-        #{blackFlag}
-        );
-    </insert>
+<!--    <insert id="insertOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">-->
+<!--        insert into t_reader_black_list(-->
+<!--        id,-->
+<!--        reader_id,-->
+<!--        reader_name,-->
+<!--        black_flag-->
+<!--        )-->
+<!--        values(-->
+<!--        #{id},-->
+<!--        #{readerId},-->
+<!--        #{readerName},-->
+<!--        #{blackFlag}-->
+<!--        );-->
+<!--    </insert>-->
 
-    <update id="updateOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">
-        update t_reader_black_list set
-        <trim suffixOverrides=",">
-            <if test="readerId != null">
-                reader_id = #{readerId},
-            </if>
-            <if test="readerName != null">
-                reader_name = #{readerName},
-            </if>
-            <if test="blackFlag != null">
-                black_flag = #{blackFlag},
-            </if>
-        </trim>
-        <where>
-            id = #{id}
-        </where>
-    </update>
+<!--    <update id="updateOne" parameterType="com.example.demo.executer.readerBlackList.model.ReaderBlackListModel">-->
+<!--        update t_reader_black_list set-->
+<!--        <trim suffixOverrides=",">-->
+<!--            <if test="readerId != null">-->
+<!--                reader_id = #{readerId},-->
+<!--            </if>-->
+<!--            <if test="readerName != null">-->
+<!--                reader_name = #{readerName},-->
+<!--            </if>-->
+<!--            <if test="blackFlag != null">-->
+<!--                black_flag = #{blackFlag},-->
+<!--            </if>-->
+<!--        </trim>-->
+<!--        <where>-->
+<!--            id = #{id}-->
+<!--        </where>-->
+<!--    </update>-->
 
-    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
-        from t_reader_black_list
-        where reader_id = #{id}
-    </select>
+<!--    <select id="selectOne" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+<!--        select-->
+<!--        <include refid="Base_Column_List"/>-->
+<!--        from t_reader_black_list-->
+<!--        where reader_id = #{id}-->
+<!--    </select>-->
 
 
 </mapper>

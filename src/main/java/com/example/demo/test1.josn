@@ -1,1 +1,18 @@
-SELECT ID,CREATE_TIME,UPDATE_TIME,DEL_FLAG,id,city,parent_id,level,project_id,company_id,product_id,device_key,create_time,update_time,create_by,update_by,last_line_time,time_zone,state,last_warning_time,warning_count,remark,location_type,function_describe,device_name,device_mac,device_sn,device_imei,device_longitude,device_latitude,device_address,endian,device_type,baud_rate,serial_type,com,dev,data_bits,parity,stop_bits,flow_control,addr,belong,instance_info,product_type_name,north_deploy_url,south_deploy_url,permission,permission_count,device_identify_type,device_unique,device_profile,plan_id,imsi FROM opt_device_info WHERE ( ( DEL_FLAG = ? ) ) 
+{
+  "productId": "4137264554138800128",
+  "productFunctionName": "lt_test0319",
+  "productPropertyName": "lt_test0319",
+  "dataType": "1",
+  "visitPattern": "RW",
+  "relationKeyToRelation": [
+    "1"
+  ],
+  "relationValueToRelation": [
+    "999"
+  ],
+  "unitCodeId": "",
+  "stepLength": "1",
+  "profileName": "lt_test0319",
+  "textLength": "",
+  "id": "4137269636918022144"
+}

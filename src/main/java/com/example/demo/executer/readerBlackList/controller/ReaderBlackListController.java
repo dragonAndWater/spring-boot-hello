@@ -3,6 +3,7 @@ package com.example.demo.executer.readerBlackList.controller;
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
 import com.alibaba.excel.read.metadata.ReadSheet;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.base.Enum.Msg;
 import com.example.demo.base.annonation.BaseBeforeAnnotation;
 import com.example.demo.base.model.baseResponse.BaseResponse;
@@ -10,6 +11,7 @@ import com.example.demo.executer.readerBlackList.excelListener.BlackListExcelLis
 import com.example.demo.executer.readerBlackList.model.BlackListExcel;
 import com.example.demo.executer.readerBlackList.model.ReaderBlackListModel;
 import com.example.demo.executer.readerBlackList.service.ReaderBlackListService;
+import com.example.demo.util.commonUtil.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,31 +29,34 @@ public class ReaderBlackListController {
     private ReaderBlackListService readerBlackListService;
 
     @BaseBeforeAnnotation
-    @RequestMapping("insertOne")
-    public BaseResponse insertReaderBlackList(@RequestBody ReaderBlackListModel model) {
-        Boolean flag = readerBlackListService.save(model);
+    @RequestMapping("saveOrUpdate")
+    public BaseResponse saveOrUpdate(@RequestBody ReaderBlackListModel model) {
+        Boolean flag = readerBlackListService.saveOrUpdate(model);
         if (flag) {
             return new BaseResponse(Msg.SUCCESS);
         }
         return new BaseResponse(Msg.ERROR);
     }
 
-    @BaseBeforeAnnotation
-    @RequestMapping("updateOne")
-    public BaseResponse updateReaderBlackList(@RequestBody ReaderBlackListModel model) {
-//        Boolean flag = readerBlackListService.update(model);
-//        if(flag){
-//            return new BaseResponse(ResultEnum.SUCCESS);
-//        }
-        return new BaseResponse(Msg.ERROR);
-    }
 
     @BaseBeforeAnnotation
     @RequestMapping("selectOne")
     public BaseResponse selectReaderBlackList(@RequestBody ReaderBlackListModel model) {
-//        ReaderBlackListModel bookInfoModel = readerBlackListService.selectOne(model.getId());
-//        return new BaseResponse(ResultEnum.SUCCESS,bookInfoModel);
-        return null;
+        QueryWrapper<ReaderBlackListModel> queryWrapper = new QueryWrapper<>();
+        if(StringUtil.isNotBlank(model.getId())){
+            queryWrapper.lambda().eq(ReaderBlackListModel::getId,model.getId());
+        }
+        if(StringUtil.isNotBlank(model.getReaderId())){
+            queryWrapper.lambda().eq(ReaderBlackListModel::getReaderId,model.getReaderId());
+        }
+        if(StringUtil.isNotBlank(model.getReaderName())){
+            queryWrapper.lambda().like(ReaderBlackListModel::getReaderName,model.getReaderName());
+        }
+        if(StringUtil.isNotBlank(model.getBlackFlag())){
+            queryWrapper.lambda().eq(ReaderBlackListModel::getBlackFlag,model.getBlackFlag());
+        }
+        ReaderBlackListModel result = readerBlackListService.getOne(queryWrapper);
+        return new BaseResponse(Msg.SUCCESS,result);
     }
 
     @BaseBeforeAnnotation
