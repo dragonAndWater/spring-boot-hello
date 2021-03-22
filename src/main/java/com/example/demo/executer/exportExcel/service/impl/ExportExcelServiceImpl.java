@@ -76,7 +76,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
         String fileName = "E:/1.IDEA/Workspace/helloFile/writerExcel_test_2.xls";
         // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         EasyExcel.write(fileName, CustEnterpriseExcel.class).sheet("测试模板").doWrite(list);
-        return null;
+        return new BaseResponse(Msg.SUCCESS);
     }
     /**
      * @Author longtao
@@ -91,7 +91,7 @@ public class ExportExcelServiceImpl implements ExportExcelService {
         String fileName = "E:/1.IDEA/Workspace/helloFile/writerExcel_test_1.xls";
 //        // 这里 需要指定写用哪个class去写，然后写到第一个sheet，名字为模板 然后文件流会自动关闭
         EasyExcel.write(fileName, CustEnterpriseExcel.class).withTemplate(templateFileName).sheet("公司信息").doWrite(list);
-        return null;
+        return new BaseResponse(Msg.SUCCESS);
     }
     public static void writeExcelModel(OutputStream os, List<? extends BaseRowModel> data, Class<? extends BaseRowModel> clazz, String sheetName){
         try{
