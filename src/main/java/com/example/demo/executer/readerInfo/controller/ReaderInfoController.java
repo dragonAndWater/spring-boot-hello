@@ -13,6 +13,7 @@ import com.example.demo.executer.readerCardInfo.model.ReaderCardInfoModel;
 import com.example.demo.executer.readerCardInfo.service.ReaderCardInfoService;
 import com.example.demo.executer.readerInfo.model.ReaderInfoModel;
 import com.example.demo.executer.readerInfo.service.ReaderInfoService;
+import com.example.demo.util.commonUtil.StringUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
@@ -35,30 +36,27 @@ public class ReaderInfoController {
     @Autowired
     private ReaderCardInfoService readerCardInfoService;
 
-    /**
-     * @Author longtao
-     * @Date 2020/10/21
-     * @Describe 新建读者信息
-     **/
-    @BaseBeforeAnnotation
-    @RequestMapping("insertOne")
-    public BaseResponse insertReaderInfo(@RequestBody ReaderInfoModel model) {
-        Boolean flag = readerInfoService.insertReader(model);
-        if (flag) {
-            return new BaseResponse(Msg.SUCCESS);
-        }
-        return new BaseResponse(Msg.ERROR);
-    }
-
-    @BaseBeforeAnnotation
-    @RequestMapping("updateOne")
-    public BaseResponse updateReaderInfo(@RequestBody ReaderInfoModel model) {
-//        Boolean flag = readerInfoService.updateOne(model);
-//        if (flag) {
-//            return new BaseResponse(ResultEnum.SUCCESS);
+//    /**
+//     * @Author longtao
+//     * @Date 2020/10/21
+//     * @Describe 新建读者信息
+//     **/
+//    @BaseBeforeAnnotation
+//    @RequestMapping("saveOrUpdate")
+//    public BaseResponse saveOrUpdate(@RequestBody ReaderInfoModel model) throws CheckException {
+//        if(StringUtil.isBlank(model.getReaderName())){
+//            throw new CheckException(Check.CHECK_CARD);
 //        }
-        return new BaseResponse(Msg.ERROR);
-    }
+//        if(StringUtil.isBlank(model.getReaderPhone())){
+//            throw new CheckException(Check.CHECK_PHONE);
+//        }
+//       Boolean flag =  readerInfoService.saveOrUpdate(model);
+//        if(flag){
+//            return new BaseResponse(Msg.SUCCESS);
+//        }
+//        return new BaseResponse(Msg.ERROR);
+//    }
+
 
     @BaseBeforeAnnotation
     @CheckVisitTimesAroundAnnotation
@@ -80,8 +78,8 @@ public class ReaderInfoController {
     @PostMapping("saveOrUpdate")
     public BaseResponse saveOrUpdate(@RequestBody ReaderInfoModel model) throws CheckException {
         //暂无业务检查
-        if (StringUtils.isEmpty(model.getId())) {
-            if (StringUtils.isEmpty(model.getCardId())) {
+        if (StringUtil.isBlank(model.getId())) {
+            if (StringUtil.isBlank(model.getCardId())) {
                 throw new CheckException(Check.CHECK_CARD);
             } else {
                 ReaderCardInfoModel cardModel = readerCardInfoService.getOne(new QueryWrapper<ReaderCardInfoModel>()
@@ -93,10 +91,10 @@ public class ReaderInfoController {
                     throw new CheckException(Check.CHECK_CARD_NOT_EXIST);
                 }
             }
-            if (StringUtils.isEmpty(model.getReaderName())) {
+            if (StringUtil.isBlank(model.getReaderName())) {
                 throw new CheckException(Check.CHECK_NAME);
             }
-            if (StringUtils.isEmpty(model.getReaderPhone())) {
+            if (StringUtil.isBlank(model.getReaderPhone())) {
                 throw new CheckException(Check.CHECK_PHONE);
             }
         }
@@ -111,27 +109,27 @@ public class ReaderInfoController {
     @PostMapping("getPageList")
     public BaseResponse getPageList(@RequestBody ReaderInfoModel model) {
         //设置分页参数
-        if (!StringUtils.isEmpty(model.getPageNo()) && !StringUtils.isEmpty(model.getPageSize())) {
+        if (!StringUtil.isBlank(model.getPageNo()) && !StringUtil.isBlank(model.getPageSize())) {
             PageHelper.startPage(model.getPageNo(), model.getPageSize());
         }
         //设置查询条件
         QueryWrapper<ReaderInfoModel> queryWrapper = new QueryWrapper();
-        if (!StringUtils.isEmpty(model.getId())) {
+        if (!StringUtil.isBlank(model.getId())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getId, model.getId());
         }
-        if (!StringUtils.isEmpty(model.getCardId())) {
+        if (!StringUtil.isBlank(model.getCardId())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getCardId, model.getCardId());
         }
-        if (!StringUtils.isEmpty(model.getReaderName())) {
+        if (!StringUtil.isBlank(model.getReaderName())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getReaderName, model.getReaderName());
         }
-        if (!StringUtils.isEmpty(model.getReaderCardNo())) {
+        if (!StringUtil.isBlank(model.getReaderCardNo())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getReaderCardNo, model.getReaderCardNo());
         }
-        if (!StringUtils.isEmpty(model.getReaderPhone())) {
+        if (!StringUtil.isBlank(model.getReaderPhone())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getReaderPhone, model.getReaderPhone());
         }
-        if (!StringUtils.isEmpty(model.getReaderCardType())) {
+        if (!StringUtil.isBlank(model.getReaderCardType())) {
             queryWrapper.lambda().eq(ReaderInfoModel::getReaderCardType, model.getReaderCardType());
         }
         queryWrapper.lambda().orderByDesc(BaseModel::getCreateTime);

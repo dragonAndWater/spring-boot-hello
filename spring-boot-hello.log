@@ -44,3 +44,29 @@
 2021-03-22 15:55:15.693 DEBUG 27812 --- [http-nio-8701-exec-1] c.e.d.base.aspect.BaseAroundAspection    : ----------------------------------------------------------------------------------------------------end
 2021-03-22 15:55:15.763  INFO 27812 --- [http-nio-8701-exec-1] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor postHandle 开始拦截.........
 2021-03-22 15:55:15.763  INFO 27812 --- [http-nio-8701-exec-1] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor afterCompletion 开始拦截.........
+2021-03-22 16:53:58.589  INFO 27812 --- [http-nio-8701-exec-4] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor preHandle 开始拦截.........
+2021-03-22 16:53:58.593  INFO 27812 --- [http-nio-8701-exec-4] c.e.demo.base.filter.LoginInterceptor    : appId = null
+2021-03-22 16:53:58.605 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ----------------------------------------------------------------------------------------------------start
+2021-03-22 16:53:58.605  INFO 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ------BaseBeforeAspect---获取到请求参数------
+2021-03-22 16:53:58.605 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ---入口方法:com.example.demo.executer.exportExcel.controller.ExportExcelController
+2021-03-22 16:53:58.606 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ---请求方法:getFile
+2021-03-22 16:53:58.636 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : 不能打印请求参数
+2021-03-22 16:53:58.636 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ------开始执行请求方法:getFile
+2021-03-22 16:53:58.640 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ---请求方法:getFile---执行时间:4
+2021-03-22 16:53:58.641 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ---返回参数:null
+2021-03-22 16:53:58.641 DEBUG 27812 --- [http-nio-8701-exec-4] c.e.d.base.aspect.BaseAroundAspection    : ----------------------------------------------------------------------------------------------------end
+2021-03-22 16:53:58.641  INFO 27812 --- [http-nio-8701-exec-4] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor postHandle 开始拦截.........
+2021-03-22 16:53:58.641  INFO 27812 --- [http-nio-8701-exec-4] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor afterCompletion 开始拦截.........
+2021-03-22 16:54:19.054  INFO 27812 --- [http-nio-8701-exec-5] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor preHandle 开始拦截.........
+2021-03-22 16:54:19.054  INFO 27812 --- [http-nio-8701-exec-5] c.e.demo.base.filter.LoginInterceptor    : appId = null
+2021-03-22 16:54:19.055 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ----------------------------------------------------------------------------------------------------start
+2021-03-22 16:54:19.055  INFO 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ------BaseBeforeAspect---获取到请求参数------
+2021-03-22 16:54:19.055 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ---入口方法:com.example.demo.executer.exportExcel.controller.ExportExcelController
+2021-03-22 16:54:19.055 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ---请求方法:getFile
+2021-03-22 16:54:19.055 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : 不能打印请求参数
+2021-03-22 16:54:19.055 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ------开始执行请求方法:getFile
+2021-03-22 16:54:19.056 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ---请求方法:getFile---执行时间:1
+2021-03-22 16:54:19.056 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ---返回参数:null
+2021-03-22 16:54:19.056 DEBUG 27812 --- [http-nio-8701-exec-5] c.e.d.base.aspect.BaseAroundAspection    : ----------------------------------------------------------------------------------------------------end
+2021-03-22 16:54:19.056  INFO 27812 --- [http-nio-8701-exec-5] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor postHandle 开始拦截.........
+2021-03-22 16:54:19.056  INFO 27812 --- [http-nio-8701-exec-5] c.e.demo.base.filter.LoginInterceptor    : LoginInterceptor afterCompletion 开始拦截.........

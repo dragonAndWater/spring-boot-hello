@@ -1,18 +1,53 @@
-{
-  "productId": "4137264554138800128",
-  "productFunctionName": "lt_test0319",
-  "productPropertyName": "lt_test0319",
-  "dataType": "1",
-  "visitPattern": "RW",
-  "relationKeyToRelation": [
-    "1"
-  ],
-  "relationValueToRelation": [
-    "999"
-  ],
-  "unitCodeId": "",
-  "stepLength": "1",
-  "profileName": "lt_test0319",
-  "textLength": "",
-  "id": "4137269636918022144"
-}
+[
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "id": 6,
+                "name": "测试1",
+                "parentId": 5
+              }
+            ],
+            "id": 5,
+            "name": "测试1",
+            "parentId": 3
+          }
+        ],
+        "id": 3,
+        "name": "测试1",
+        "parentId": 1
+      },
+      {
+        "children": [],
+        "id": 4,
+        "name": "测试1",
+        "parentId": 1
+      }
+    ],
+    "id": 1,
+    "name": "测试1"
+  },
+  {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [],
+            "id": 8,
+            "name": "测试1",
+            "parentId": 7
+          }
+        ],
+        "id": 7,
+        "name": "测试1",
+        "parentId": 2
+      }
+    ],
+    "id": 2,
+    "name": "测试1"
+  }
+]
