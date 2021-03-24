@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.executer.tArea.dao.TAreaDao">
+
+    <resultMap id="provinceResult" type="com.example.demo.executer.tArea.model.EProvince">
+        <result property="id" column="province_id"/>
+        <result property="code" column="province_code"/>
+        <result property="name" column="province_name"/>
+        <!--文章集合 -->
+        <collection property="children" ofType="com.example.demo.executer.tArea.model.ECity">
+            <result property="id" column="city_id"/>
+            <result property="code" column="city_code"/>
+            <result property="name" column="city_name"/>
+            <!--文章集合 -->
+            <collection property="children" ofType="com.example.demo.executer.tArea.model.EArea">
+                <result property="id" column="area_id"/>
+                <result property="code" column="area_code"/>
+                <result property="name" column="area_name"/>
+            </collection>
+        </collection>
+    </resultMap>
+    <!--    <resultMap id="provinceResult" type="com.example.demo.executer.tArea.model.TAreaModel">-->
+    <!--        <result property="id" column="province_id"/>-->
+    <!--        <result property="areaCode" column="province_code"/>-->
+    <!--        <result property="areaName" column="province_name"/>-->
+    <!--        &lt;!&ndash;文章集合 &ndash;&gt;-->
+    <!--        <collection property="children" ofType="com.example.demo.executer.tArea.model.TAreaModel">-->
+    <!--            <result property="id" column="city_id"/>-->
+    <!--            <result property="areaCode" column="city_code"/>-->
+    <!--            <result property="areaName" column="city_name"/>-->
+    <!--            &lt;!&ndash;文章集合 &ndash;&gt;-->
+    <!--            <collection property="children" ofType="com.example.demo.executer.tArea.model.TAreaModel">-->
+    <!--                <result property="id" column="area_id"/>-->
+    <!--                <result property="areaCode" column="area_code"/>-->
+    <!--                <result property="areaName" column="area_name"/>-->
+    <!--            </collection>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+
+    <select id="getTreeArea" resultMap="provinceResult">
+        SELECT
+        t1.id province_id,
+        t1.area_code province_code,
+        t1.area_name province_name,
+        t2.id city_id,
+        t2.area_code city_code,
+        t2.area_name city_name,
+        t3.id area_id,
+        t3.area_code area_code,
+        t3.area_name area_name
+        FROM (select * from t_area where `level` = 1) t1
+        LEFT JOIN t_area t2 ON t2.pid = t1.id
+        left join t_area t3 on t3.pid = t2.id
+        <where>
+            <if test="areaCode != null and areaCode != ''">
+                and t1.area_code = #{areaCode}
+            </if>
+        </where>
+    </select>
+    <select id="getTreeAreaByFunction" resultType="com.example.demo.executer.tArea.model.TAreaVo">
+        select
+        id,
+        pid,
+        area_code,
+        area_name
+        from t_area
+        where
+        is_del = 0
+        <if test="id != null">
+            and find_in_set(id,tArea_all_child(#{id}))
+        </if>
+
+    </select>
+
+</mapper>
