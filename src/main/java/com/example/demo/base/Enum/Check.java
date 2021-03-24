@@ -11,6 +11,8 @@ public enum Check {
 
     CHECK_CARD_NOT_EXIST("200000","借阅卡不存在"),
 
+    CHECK_CODE_OR_NAME("200000","区域code或区域name至少上传一个"),
+
     ERROR("999999","失败");
 
     public static final String CHECK_MUST = "校验不通过: ";
