@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: spring-boot-hello
+  cloud:
+    nacos:
+      config:
+        group: ccsiot-north
+        server-addr: 10.206.20.116:8848 #测试
+        namespace: cc0da731-b144-4d08-b8dd-a5445eecbafa #north-dev
+        file-extension: yaml
+        #配置是否从nacos获取配置 true:nacos获取 false:本地获取
+        enabled: true
+        #从公共配置中获取
+        ext-config[0]:
+          data-id: base.yaml
+          refresh: true
+      discovery:
+        server-addr: ${spring.cloud.nacos.config.server-addr}
+        namespace: ${spring.cloud.nacos.config.namespace}
+        enabled: true
+        register-enabled: true
