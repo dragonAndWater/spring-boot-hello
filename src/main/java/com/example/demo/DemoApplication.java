@@ -3,11 +3,14 @@ package com.example.demo;
 import com.example.demo.base.config.ServerPortConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableAsync
+@EnableDiscoveryClient
 public class DemoApplication {
     private static final String red = "\033[31;4m";
     private static final String end = "\033[0m";

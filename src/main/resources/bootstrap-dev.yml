@@ -4,9 +4,9 @@ spring:
   cloud:
     nacos:
       config:
-        group: ccsiot-north
-        server-addr: 10.206.20.116:8848 #测试
-        namespace: cc0da731-b144-4d08-b8dd-a5445eecbafa #north-dev
+        group: long_tao-dev
+        server-addr: 192.168.1.200:8848
+        namespace: 1c082e51-2b1e-4b09-95b6-c4e1ac9569d8
         file-extension: yaml
         #配置是否从nacos获取配置 true:nacos获取 false:本地获取
         enabled: true
@@ -19,3 +19,78 @@ spring:
         namespace: ${spring.cloud.nacos.config.namespace}
         enabled: true
         register-enabled: true
+
+#---
+#####spring
+#spring:
+#  main:
+#    allow-bean-definition-overriding: true
+#server:
+#  port: 8701
+#  servlet:
+#    encoding:
+#      charset: utf-8
+#---
+#####spring
+#####mybatis
+#mybatis:
+#  mapper-locations: classpath:mapper/*/*.xml
+#####mybatis
+#####mysql
+#spring:
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/long_tao?serverTimezone=UTC
+#    username: root
+#    password: qQ199132
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#---
+###mysql
+###redis
+#spring:
+#  redis:
+#    host: 192.168.1.200
+#    port: 6379
+#    timeout: 2000
+#    jedis:
+#      pool:
+#        max-active: 8
+#---
+#####redis
+#####log
+#logging:
+#  level:
+#    com:
+#      example:
+#        demo:
+#          executer.*: DEBUG
+#          base.*: DEBUG
+#
+#uploadUrl: E:/1.IDEA/Workspace/helloFile/
+#
+#spring:
+#  servlet:
+#    multipart.max-file-size: 500MB
+#    multipart.max-request-size: 500MB
+#
+#sms:
+#  wechat:
+#    offiaicl:
+#      threadPoolSize: 50
+#
+#borrowBook:
+#  overdue:
+#    month: 2
+#
+#bookArithmetic:
+#  freeHour: 1
+#  maxHour: 168
+#  freeDay: 2
+#  maxDay: 60
+#  freeMonth: 0
+#  maxMonth: 2
+#  rareMultiple: 5
+#  depreciationYear: 10
+#####
+
+
+
